@@ -90,10 +90,10 @@ Este projeto segue o padrão de commits baseado no Conventional Commits para fac
 ### 🏗️ Padrões de Projeto
 Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecidos para garantir a manutenibilidade e qualidade do código.
 
-- **Singleton**: Para gerenciar instâncias únicas (ex.: configuração de segurança). 
-- **Factory**: Para criação de objetos de forma controlada. 
-- **Repository**: Para abstrair operações no banco de dados. 
-- **Service Layer**: Para concentrar regras de negócio e lógica da aplicação.
+- **[Singleton](https://refactoring.guru/pt-br/design-patterns/singleton)**: Para gerenciar instâncias únicas (ex.: configuração de segurança). 
+- **[Factory](https://refactoring.guru/pt-br/design-patterns/factory-method)**: Para criação de objetos de forma controlada. 
+- **[Repository](https://www.geeksforgeeks.org/repository-design-pattern/)**: Para abstrair operações no banco de dados. 
+- **[Service Layer](https://java-design-patterns.com/patterns/service-layer/#programmatic-example-of-service-layer-pattern-in-java)**: Para concentrar regras de negócio e lógica da aplicação.
 
 
 ---
