@@ -2,7 +2,7 @@ package br.com.sgm.inventory_management_system.controller.auth;
 
 import br.com.sgm.inventory_management_system.controller.service.UserService;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,10 +20,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -44,7 +44,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Long id) {
 
         try {
-            userService.deteleUserById(id);
+            userService.deleteUserById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException nsee) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

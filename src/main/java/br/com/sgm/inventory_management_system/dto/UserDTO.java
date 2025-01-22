@@ -2,7 +2,11 @@ package br.com.sgm.inventory_management_system.dto;
 
 import br.com.sgm.inventory_management_system.model.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class UserDTO {
 
     private String id;
@@ -18,44 +22,4 @@ public class UserDTO {
 
     @JsonProperty("role")
     private Role role = Role.USER; // Padrão: Usuário comum ;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

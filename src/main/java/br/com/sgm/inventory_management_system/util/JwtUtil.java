@@ -3,32 +3,39 @@ package br.com.sgm.inventory_management_system.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET = "minhaChaveSuperSecretaDeNoMinimo32Caracteres";
-    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 horas
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @Value("${jwt.expiration-time}")
+    private long expirationTime;
+
+    private SecretKey secretKey;
+
     // Gera o token JWT
     public String generateToken(String email,String role) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role) // Inclui o papel correto
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SECRET_KEY)
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(secretKey)
                 .compact();
     }
 
     // Extrai as claims do token
     public Claims extractClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }

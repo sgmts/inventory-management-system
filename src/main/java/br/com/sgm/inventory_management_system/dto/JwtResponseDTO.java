@@ -1,5 +1,10 @@
 package br.com.sgm.inventory_management_system.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class JwtResponseDTO {
 
     private String token;
@@ -7,21 +12,5 @@ public class JwtResponseDTO {
 
     public JwtResponseDTO(String token) {
         this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

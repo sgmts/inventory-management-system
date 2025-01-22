@@ -5,26 +5,23 @@ import br.com.sgm.inventory_management_system.dto.LoginRequestDTO;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
 import br.com.sgm.inventory_management_system.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public String authenticate(LoginRequestDTO loginRequest) {
         // Verifica se o usuário existe

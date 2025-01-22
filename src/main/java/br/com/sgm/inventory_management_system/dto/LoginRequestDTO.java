@@ -2,7 +2,11 @@ package br.com.sgm.inventory_management_system.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class LoginRequestDTO {
 
     @NotBlank(message = "O e-mail é obrigatório.")
@@ -11,20 +15,4 @@ public class LoginRequestDTO {
 
     @NotBlank(message = "A senha é obrigatória.")
     private String password;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -5,8 +5,7 @@ import br.com.sgm.inventory_management_system.dto.UserDTO;
 import br.com.sgm.inventory_management_system.mapper.UserMapper;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +14,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserMapper userMapper;
 
     public UserDTO registerUser(UserDTO userDTO) {
 
@@ -61,7 +58,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapModelToDTOOptional(requestedUser);
     }
 
-    public void deteleUserById(Long id) {
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 

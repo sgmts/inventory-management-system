@@ -6,8 +6,7 @@ import br.com.sgm.inventory_management_system.dto.JwtResponseDTO;
 import br.com.sgm.inventory_management_system.dto.LoginRequestDTO;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthController {
 
-    @Autowired
     private final UserService userService;
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
 
 
     @PostMapping("/register")

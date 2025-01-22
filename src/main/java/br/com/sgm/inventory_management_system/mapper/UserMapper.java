@@ -20,7 +20,7 @@ public class UserMapper {
         return modelMapper.map(user, UserDTO.class);
     }
 
-    public Optional<UserDTO> mapModelToDTOOptional(Optional<User> patient) {
-        return Optional.ofNullable(modelMapper.map(patient, UserDTO.class));
+    public Optional<UserDTO> mapModelToDTOOptional(Optional<User> user) {
+        return Optional.ofNullable(modelMapper.map(user, UserDTO.class));
     }
 }
