@@ -138,4 +138,4 @@ Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecid
 ## 📝 Licença
 Este projeto está licenciado sob a **GNU General Public License v3.0**.
 
-Para mais detalhes, leia o arquivo **LICENSE** ou visite GNU.org.
+Para mais detalhes, leia o arquivo **[LICENSE](LICENSE)** ou visite [GNU.org](https://www.gnu.org/).
