@@ -130,7 +130,7 @@ Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecid
 - ✅ Testes unitários com JUnit para validação dos serviços. 
 - ✅ Testes de integração para endpoints REST.
 
-###  Testes Manuais
+### 🛠️ Testes Manuais
 - 🔄 Verificação de fluxo completo usando Postman. 
 - 🔐 Testes de segurança simulando entradas maliciosas.
 
