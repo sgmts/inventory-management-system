@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
-@Tag(name = "Inventory Management System", description = "Sistema de Gestão de Estoque Seguro")
+@Tag(name = "Controle de Autenticação", description = "Controle de Registro e Login de Usuarios do sistema.")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
 public class AuthController {
 

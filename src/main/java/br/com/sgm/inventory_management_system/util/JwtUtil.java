@@ -3,6 +3,7 @@ package br.com.sgm.inventory_management_system.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +21,18 @@ public class JwtUtil {
 
     private SecretKey secretKey;
 
+    // Inicializa a chave de assinatura
+    @PostConstruct
+    public void init() {
+        if (secret != null && secret.length() >= 32) {
+            secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        } else {
+            throw new IllegalArgumentException("A chave JWT (jwt.secret) é inválida ou está ausente!");
+        }
+    }
+
     // Gera o token JWT
     public String generateToken(String email,String role) {
-        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role) // Inclui o papel correto

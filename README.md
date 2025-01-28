@@ -7,6 +7,11 @@ O Sistema de Gestão de Estoque com Segurança é uma aplicação robusta desenv
 
 ---
 ## ✨ Funcionalidades
+
+### 🔐 Autenticação e Autorização
+- Login seguro com **tokens JWT**.
+- Controle de permissões (admin, operador e visualizador).
+
 ### 📦 Gerenciamento de Produtos
 - Cadastro;
 - edição;
@@ -22,16 +27,10 @@ O Sistema de Gestão de Estoque com Segurança é uma aplicação robusta desenv
 ### 🔄 Movimentações de Estoque
 Registrar entradas e saídas com rastreamento de quem realizou a ação.
 
-### 🔐 Autenticação e Autorização
-
-- Login seguro com **tokens JWT**.
-- Controle de permissões (admin, operador e visualizador).
-
 ### 🧾 Registro de Auditoria
 Histórico detalhado de alterações feitas no sistema.
 
 ### 📊 Relatórios
-
 - Produtos com estoque crítico.
 - Histórico de movimentações e ações realizadas por usuários.
 
@@ -44,6 +43,7 @@ Histórico detalhado de alterações feitas no sistema.
 - 🔑 JWT: Tokens de autenticação para sessões seguras.
 - 📚 MySQL: Banco de dados relacional.
 - 🛠️ Maven: Gerenciamento de dependências.
+- ✏️ Swagger (SpringDoc OpenAPI)
 
 ---
 ## 🔗 Endpoints da API
@@ -135,7 +135,29 @@ Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecid
 - 🔐 Testes de segurança simulando entradas maliciosas.
 
 ---
+## Documentação da API
+A documentação da API é gerada automaticamente pelo Swagger (SpringDoc OpenAPI).
+
+### Acessando o Swagger
+Após iniciar o projeto, você pode acessar a documentação interativa em:
+`http://localhost:8080/swagger-ui/index.html`
+
+### Segurança na API
+A API utiliza autenticação JWT. Para acessar os endpoints protegidos, você deve:
+1. Obter um token JWT no endpoint de login (`/auth/login`).
+2. Clicar no botão Authorize no Swagger
+3. Inserir o token
+
+---
 ## 📝 Licença
 Este projeto está licenciado sob a **GNU General Public License v3.0**.
 
 Para mais detalhes, leia o arquivo **[LICENSE](LICENSE)** ou visite [GNU.org](https://www.gnu.org/).
+
+---
+### Contato
+Contato
+
+Para mais informações, entre em contato:
+- **Desenvolvedor**: Samuel Martins
+- E-mail: sgmartins777@gmail.com
