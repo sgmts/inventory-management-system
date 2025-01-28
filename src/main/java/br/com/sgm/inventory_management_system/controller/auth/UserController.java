@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.controller.auth;
 
-import br.com.sgm.inventory_management_system.controller.service.UserService;
+import br.com.sgm.inventory_management_system.service.UserService;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -72,12 +72,8 @@ public class UserController {
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
 
-        try {
-            userService.deleteUserById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (NoSuchElementException nsee) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

@@ -1,7 +1,7 @@
 package br.com.sgm.inventory_management_system.controller.auth;
 
-import br.com.sgm.inventory_management_system.controller.service.AuthService;
-import br.com.sgm.inventory_management_system.controller.service.UserService;
+import br.com.sgm.inventory_management_system.service.AuthService;
+import br.com.sgm.inventory_management_system.service.UserService;
 import br.com.sgm.inventory_management_system.dto.JwtResponseDTO;
 import br.com.sgm.inventory_management_system.dto.LoginRequestDTO;
 import br.com.sgm.inventory_management_system.dto.UserDTO;

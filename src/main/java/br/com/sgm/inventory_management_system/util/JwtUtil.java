@@ -1,5 +1,6 @@
 package br.com.sgm.inventory_management_system.util;
 
+import br.com.sgm.inventory_management_system.exceptions.JwtKeyMissingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -27,7 +28,7 @@ public class JwtUtil {
         if (secret != null && secret.length() >= 32) {
             secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         } else {
-            throw new IllegalArgumentException("A chave JWT (jwt.secret) é inválida ou está ausente!");
+            throw new JwtKeyMissingException();
         }
     }
 

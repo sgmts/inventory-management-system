@@ -1,15 +1,19 @@
-package br.com.sgm.inventory_management_system.controller.service.impl;
+package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.controller.service.UserService;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
+import br.com.sgm.inventory_management_system.exceptions.EmailAlreadyRegisteredException;
+import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingUserException;
+import br.com.sgm.inventory_management_system.exceptions.UserNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.UserMapper;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
+import br.com.sgm.inventory_management_system.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
         // Verifica se o e-mail já está cadastrado
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("E-mail já cadastrado.");
+            throw new EmailAlreadyRegisteredException();
         }
 
         // Criptografa a senha
@@ -59,20 +63,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (NoSuchElementException nsee) {
+            throw new ErrorDeletingUserException();
+        }
     }
 
     public void updateUser(Long id, UserDTO newUser) {
 
         // Busca o usuário existente no banco
         User userUpdated = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + id));
+                .orElseThrow(UserNotFoundException::new);
 
         // Verifica se o e-mail já está cadastrado em outro registro
         userRepository.findByEmail(newUser.getEmail())
                 .ifPresent(existingUser -> {
                     if (!existingUser.getId().equals(id)) {
-                        throw new IllegalArgumentException("E-mail já cadastrado.");
+                        throw new EmailAlreadyRegisteredException();
                     }
                 });
 
