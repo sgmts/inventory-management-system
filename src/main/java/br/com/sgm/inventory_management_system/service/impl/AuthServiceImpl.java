@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.LoginRequestDTO;
+import br.com.sgm.inventory_management_system.dto.LoginRequestDto;
 import br.com.sgm.inventory_management_system.exceptions.InvalidCredentialsException;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public String authenticate(LoginRequestDTO loginRequest) {
+    public String authenticate(LoginRequestDto loginRequest) {
         // Verifica se o usuário existe
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(InvalidCredentialsException::new);

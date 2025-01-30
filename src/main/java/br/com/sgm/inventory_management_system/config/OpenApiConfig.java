@@ -11,21 +11,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+    private static final String TITTLE = "API de Gestão de Usuários";
+    private static final String VERSION = "1.0";
+    private static final String DESCRIPTION = "Documentação da API com autenticação JWT";
+    private static final String BEARER_AUTH = "bearerAuth";
+    private static final String BEARER = "bearer";
+    private static final String BEARER_FORMAT = "JWT";
+
+
     @Bean
     public OpenAPI customOpenAPI() {
         // Configuração principal da documentação da API
         return new OpenAPI()
                 .info(new Info()
-                        .title("API de Gestão de Usuários")
-                        .version("1.0")
-                        .description("Documentação da API com autenticação JWT"))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth")) // Define o esquema de segurança global
+                        .title(TITTLE)
+                        .version(VERSION)
+                        .description(DESCRIPTION))
+                .addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH)) // Define o esquema de segurança global
                 .components(new Components()
-                        .addSecuritySchemes("bearerAuth", // Nome do esquema de segurança
+                        .addSecuritySchemes(BEARER_AUTH, // Nome do esquema de segurança
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP) // Tipo HTTP
-                                        .scheme("bearer") // Bearer Token
-                                        .bearerFormat("JWT") // Formato JWT
+                                        .scheme(BEARER) // Bearer Token
+                                        .bearerFormat(BEARER_FORMAT) // Formato JWT
                         ));
     }
 }
