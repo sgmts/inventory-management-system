@@ -26,19 +26,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
-@Tag(name = "Controle de Usuarios", description = "Controle de Usuarios do sistema")
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Busca todos os Usuarios", description = "Endpoint responsável por trazer todos os Usuario no sistema")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Lista entregue"),
-            @ApiResponse(responseCode = "403",description = "Token Invalido."),
-            @ApiResponse(responseCode = "500",description = "Erro Interno do servidor."),
-    })
     public List<UserDTO> getAllUsers(
             @RequestHeader(name = "Authorization", required = true) String token) {
         return userService.getAllUsers();
@@ -46,12 +39,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Busca Usuario por ID", description = "Endpoint responsável por trazer um usuário específico por ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Usuario encontrado com sucesso."),
-            @ApiResponse(responseCode = "403",description = "Token Invalido."),
-            @ApiResponse(responseCode = "500",description = "Erro Interno do servidor."),
-    })
     public ResponseEntity<Optional<UserDTO>> getUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
@@ -62,12 +49,6 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Deleta Usuario", description = "Endpoint responsável por apagar um usuário específico por ID do Sistema")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Usuario deletado com sucesso."),
-            @ApiResponse(responseCode = "403",description = "Token Invalido."),
-            @ApiResponse(responseCode = "500",description = "Erro Interno do servidor."),
-    })
     public ResponseEntity<HttpStatus> deleteUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
@@ -77,13 +58,6 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Atualiza Usuario no Sistema", description = "Endpoint responsável por atualizar um usuário específico por ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Usuario atualizado com sucesso."),
-            @ApiResponse(responseCode = "403",description = "Token Invalido."),
-            @ApiResponse(responseCode = "500",description = "Erro Interno do servidor."),
-    })
     public ResponseEntity<UserDTO> updateUserById(
             @PathVariable Long id,
             @RequestBody UserDTO userDTO,
