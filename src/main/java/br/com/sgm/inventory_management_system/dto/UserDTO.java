@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Setter
 @Getter
@@ -27,6 +28,7 @@ public class UserDTO {
     private String password;
 
     @NotBlank(message = "O cpf é obrigatório.")
+    @CPF(message = "CPF Invalido. Formatos aceitos: 000.000.000-00 ou 00000000000")
     @JsonProperty("cpf")
     private String cpf;
 
@@ -44,4 +46,11 @@ public class UserDTO {
 
     @JsonProperty("role")
     private Role role = Role.USER; // Padrão: Usuário comum ;
+
+    public void CpfClean(String cpf) {
+        if (cpf == null || cpf.isBlank()) {
+            throw new IllegalArgumentException("O CPF não pode ser nulo ou vazio");
+        }
+        this.cpf = cpf.replaceAll("[^0-9]", "");
+    }
 }

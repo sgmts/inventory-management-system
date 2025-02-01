@@ -43,11 +43,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Size(min = 11, max = 11, message = "CPF fora do formato padrao")
+    @Size(min = 11, max = 11, message = "CPF Invalido. Formatos aceitos: 000.000.000-00 ou 00000000000")
     @Column(nullable = false)
     private String cpf;
 
-    @Size(min = 8, max = 12, message = "formato: xxx xx xxxxxxxx")
     private String telefone;
 
     private LocalDate dataNascimento;

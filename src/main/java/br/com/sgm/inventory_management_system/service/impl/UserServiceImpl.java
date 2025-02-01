@@ -36,6 +36,8 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO registerUser(UserDTO userDTO) {
 
+        userDTO.CpfClean(userDTO.getCpf());
+
         User user = userMapper.toEntity(userDTO);
 
         // Verifica se o e-mail já está cadastrado
