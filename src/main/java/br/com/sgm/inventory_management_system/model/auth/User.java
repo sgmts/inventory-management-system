@@ -13,7 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,19 +40,27 @@ public class User {
     private String name;
 
     @NotBlank(message = "O e-mail é obrigatório.")
-    @Column(unique = true)
+    @Email(message = "O e-mail deve ser válido.")
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @NotBlank(message = "A senha é obrigatória.")
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres.")
     @Column(nullable = false)
     private String password;
 
-    @Size(min = 11, max = 11, message = "CPF Invalido. Formatos aceitos: 000.000.000-00 ou 00000000000")
-    @Column(nullable = false)
+    @NotBlank(message = "O CPF é obrigatório.")
+    @Size(min = 11, max = 11, message = "CPF inválido. Use o formato 00000000000.")
+    @Column(nullable = false, unique = true)
     private String cpf;
 
+    @NotBlank(message = "O telefone é obrigatório.")
+    @Pattern(regexp = "^[1-9]{2}9[0-9]{8}$", message = "O telefone deve estar no formato DDD + número (ex: 31912345678)")
     private String telefone;
 
+    @NotNull(message = "A data de nascimento é obrigatória.")
+    @Past(message = "A data de nascimento deve ser uma data no passado.")
+    @Column(nullable = false)
     private LocalDate dataNascimento;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

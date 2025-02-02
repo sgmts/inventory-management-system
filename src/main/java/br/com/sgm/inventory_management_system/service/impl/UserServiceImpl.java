@@ -21,8 +21,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static br.com.sgm.inventory_management_system.util.DateUtil.StringToLocalDate;
-
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -34,9 +32,10 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final EnderecoUserMapper enderecoUserMapper;
 
-    public UserDTO registerUser(UserDTO userDTO) {
+    public void registerUser(UserDTO userDTO) {
 
         userDTO.CpfClean(userDTO.getCpf());
+        userDTO.getEndereco().cepClean(userDTO.getEndereco().getCep());
 
         User user = userMapper.toEntity(userDTO);
 
@@ -53,7 +52,6 @@ public class UserServiceImpl implements UserService {
 
         // Salva o usuário no banco de dados
         userRepository.save(user);
-        return userMapper.toDto(user);
     }
 
     public List<UserDTO> getAllUsers() {
@@ -101,7 +99,7 @@ public class UserServiceImpl implements UserService {
         userUpdated.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userUpdated.setCpf(newUser.getCpf());
         userUpdated.setTelefone(newUser.getTelefone());
-        userUpdated.setDataNascimento(StringToLocalDate(newUser.getDataNascimento()));
+        userUpdated.setDataNascimento(newUser.getDataNascimento());
 
         // Atualiza o endereço do usuário
         if (newUser.getEndereco() != null) {

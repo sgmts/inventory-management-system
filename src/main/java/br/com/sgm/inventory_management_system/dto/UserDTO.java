@@ -1,12 +1,19 @@
 package br.com.sgm.inventory_management_system.dto;
 
 import br.com.sgm.inventory_management_system.model.Role;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -32,13 +39,17 @@ public class UserDTO {
     @JsonProperty("cpf")
     private String cpf;
 
+    @Pattern(regexp = "^[1-9]{2}9[0-9]{8}$", message = "O telefone deve estar no formato DDD + número (ex: 31912345678)")
     @JsonProperty("telefone")
     private String telefone;
 
-    @NotBlank(message = "A Data de Nascimento é obrigatória.")
+    @NotNull(message = "A data de nascimento é obrigatória.")
+    @Past(message = "A data de nascimento deve estar no passado.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy") // Define o formato aceito para entrada/saída JSON
     @JsonProperty("data-nascimento")
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
+    @Valid
     @JsonProperty("endereco")
     private EnderecoUserDto endereco;
 

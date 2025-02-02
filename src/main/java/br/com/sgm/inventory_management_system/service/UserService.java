@@ -12,7 +12,7 @@ public interface UserService {
 
     Optional<UserDTO> getUserById(Long id);
 
-    UserDTO registerUser(UserDTO user);
+    void registerUser(UserDTO user);
 
     void deleteUserById(Long id);
 

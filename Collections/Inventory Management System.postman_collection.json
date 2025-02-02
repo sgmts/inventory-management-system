@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "67758ad7-c2af-426a-9415-9ae149c2ed9d",
+		"name": "Inventory Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40717671"
+	},
+	"item": [
+		{
+			"name": "LOGIN",
+			"item": [
+				{
+					"name": "AUTH",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"samuel\",\r\n    \"email\": \"samuel@email.com\",\r\n    \"senha\": \"senhaFraca123\",\r\n    \"cpf\":\"022.585.256-08\",\r\n    \"telefone\":\"31912345678\",\r\n    \"data-nascimento\":\"20/10/1998\",\r\n    \"endereco\":{\r\n        \"cep\":\"12345-678\",\r\n        \"numero\":\"123\"\r\n            },\r\n    \"role\": \"ADMIN\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"samuel@email.com\",\r\n    \"senha\": \"senhaFraca123\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADM User",
+			"item": [
+				{
+					"name": "USER - GET ALL",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW11ZWxAZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzM4MjUyMjQ5LCJleHAiOjE3MzgyODgyNDl9.kKoDZ8VybFucN7cS7vrFPI1A3dgkp8muQeImjjrkmo8",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - GET BY ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW11ZWxAZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzM4NDU0MTM5LCJleHAiOjE3Mzg0OTAxMzl9.nHV2kcLhPIFX5JzZe_9CSPSKCn_JhRBq_1X7q14O-yA",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - DELETE BY ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW11ZWxAZW1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzM4NDU0MTM5LCJleHAiOjE3Mzg0OTAxMzl9.nHV2kcLhPIFX5JzZe_9CSPSKCn_JhRBq_1X7q14O-yA",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "USER - UPDATE BY ID",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0ZUBlbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzgyNjQwMjcsImV4cCI6MTczODMwMDAyN30.zNsbfHxhmkIBGB70cgXec3M6JMtueEAmsx9KF9CA_cY",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\" : \"777\",\r\n    \"email\": \"777@email.com\",\r\n    \"senha\": \"senhaFraca123\",\r\n    \"cpf\":\"12345678111\",\r\n    \"telefone\":\"1111111111\",\r\n    \"data-nascimento\":\"01/01/1911\",\r\n    \"endereco\":{\r\n        \"cep\":\"31950777\",\r\n        \"rua\":\"777\",\r\n        \"numero\":\"77\",\r\n        \"complemento\":\"777\",\r\n        \"bairro\":\"77\",\r\n        \"cidade\":\"77\",\r\n        \"uf\":\"77\",\r\n        \"regiao\":\"77\"\r\n    },\r\n    \"role\": \"ADMIN\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_local}}/api/users/1",
+							"host": [
+								"{{base_url_local}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "default",
+			"disabled": true
+		}
+	]
+}
