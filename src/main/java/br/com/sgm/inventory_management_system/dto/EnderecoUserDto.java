@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @Setter
 @AllArgsConstructor
@@ -40,8 +42,11 @@ public class EnderecoUserDto {
     @JsonProperty("regiao")
     private String regiao;
 
-    public void cepClean(String cep) {
+    public void removeCepFormatting(String cep) {
+        log.info("Iniciando a remoção da formatação do CEP: {}", cep);
+
         if (cep == null || cep.isBlank()) {
+            log.warn("O campo CEP está vazio ou nulo. Não é possível remover a formatação.");
             throw new IllegalArgumentException("O CEP não pode ser nulo ou vazio");
         }
         this.cep = cep.replaceAll("[^0-9]", "");

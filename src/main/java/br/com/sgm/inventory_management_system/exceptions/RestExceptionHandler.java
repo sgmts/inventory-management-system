@@ -22,32 +22,32 @@ public class RestExceptionHandler {
 
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    private ResponseEntity<RestErrorMessage> invalidCredentialsExceptionHandler( InvalidCredentialsException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("4001",INVALID_CREDENTIALS_MESSAGE);
+    private ResponseEntity<RestErrorMessage> invalidCredentialsExceptionHandler(InvalidCredentialsException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("4001", INVALID_CREDENTIALS_MESSAGE);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(threatResponse);
     }
 
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
-    private ResponseEntity<RestErrorMessage> emailAlreadyRegisteredExceptionExceptionHandler( EmailAlreadyRegisteredException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("5001",EMAIL_ALREADY_REGISTERED_MESSAGE);
+    private ResponseEntity<RestErrorMessage> emailAlreadyRegisteredExceptionExceptionHandler(EmailAlreadyRegisteredException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("5001", EMAIL_ALREADY_REGISTERED_MESSAGE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    private ResponseEntity<RestErrorMessage> userNotFoundExceptionExceptionHandler( UserNotFoundException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("5002",USER_NOT_FOUND_MESSAGE);
+    private ResponseEntity<RestErrorMessage> userNotFoundExceptionExceptionHandler(UserNotFoundException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("5002", USER_NOT_FOUND_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 
     @ExceptionHandler(JwtKeyMissingException.class)
-    private ResponseEntity<RestErrorMessage> jwtKeyMissingExceptionExceptionHandler( JwtKeyMissingException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("6001",JWT_KEY_MISSING_MESSAGE);
+    private ResponseEntity<RestErrorMessage> jwtKeyMissingExceptionExceptionHandler(JwtKeyMissingException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("6001", JWT_KEY_MISSING_MESSAGE);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(threatResponse);
     }
 
     @ExceptionHandler(ErrorDeletingUserException.class)
-    private ResponseEntity<RestErrorMessage> errorDeletingUserExceptionHandler( ErrorDeletingUserException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("7001",ERROR_DELETING_USER_MESSAGE);
+    private ResponseEntity<RestErrorMessage> errorDeletingUserExceptionHandler(ErrorDeletingUserException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("7001", ERROR_DELETING_USER_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 

@@ -1,12 +1,9 @@
 package br.com.sgm.inventory_management_system.controller.auth;
 
-import br.com.sgm.inventory_management_system.service.UserService;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import br.com.sgm.inventory_management_system.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
@@ -34,6 +32,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserDTO> getAllUsers(
             @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de Login");
         return userService.getAllUsers();
     }
 
@@ -42,6 +41,7 @@ public class UserController {
     public ResponseEntity<Optional<UserDTO>> getUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de buscar usuario com id {} no sistema.", id);
 
         var usuarioSolicitado = userService.getUserById(id);
         return new ResponseEntity<>(usuarioSolicitado, HttpStatus.OK);
@@ -52,6 +52,7 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de apagar usuario com id {} no sistema.", id);
 
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -62,6 +63,7 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody UserDTO userDTO,
             @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de atualizar usuario com id {} no sistema.", id);
 
         try {
             userService.updateUser(id, userDTO);

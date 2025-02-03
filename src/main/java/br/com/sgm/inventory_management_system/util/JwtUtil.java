@@ -33,7 +33,7 @@ public class JwtUtil {
     }
 
     // Gera o token JWT
-    public String generateToken(String email,String role) {
+    public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role) // Inclui o papel correto

@@ -11,10 +11,12 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Setter
 @Getter
 public class UserDTO {
@@ -45,7 +47,8 @@ public class UserDTO {
 
     @NotNull(message = "A data de nascimento é obrigatória.")
     @Past(message = "A data de nascimento deve estar no passado.")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy") // Define o formato aceito para entrada/saída JSON
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    // Define o formato aceito para entrada/saída JSON
     @JsonProperty("data-nascimento")
     private LocalDate dataNascimento;
 
@@ -58,8 +61,11 @@ public class UserDTO {
     @JsonProperty("role")
     private Role role = Role.USER; // Padrão: Usuário comum ;
 
-    public void CpfClean(String cpf) {
+    public void removeCpfFormatting(String cpf) {
+        log.info("Iniciando formatacao dos caracteres do CPF");
+
         if (cpf == null || cpf.isBlank()) {
+            log.warn("O campo CPF está vazio ou nulo. Não é possível realizar a formatacao.");
             throw new IllegalArgumentException("O CPF não pode ser nulo ou vazio");
         }
         this.cpf = cpf.replaceAll("[^0-9]", "");
