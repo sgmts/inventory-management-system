@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnderecoUserDto {
+public class UserAddress {
 
     @NotBlank(message = "O CEP é obrigatório.")
     @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "O CEP deve estar no formato 12345-678.")
@@ -22,25 +22,25 @@ public class EnderecoUserDto {
     private String cep;
 
     @JsonProperty("rua")
-    private String logradouro;
+    private String street;
 
     @JsonProperty("numero")
-    private String numero;
+    private String number;
 
     @JsonProperty("complemento")
-    private String complemento;
+    private String addressComplement;
 
     @JsonProperty("bairro")
-    private String bairro;
+    private String neighborhood; // Bairro
 
     @JsonProperty("cidade")
-    private String cidade;
+    private String city;
 
     @JsonProperty("uf")
     private String uf;
 
     @JsonProperty("regiao")
-    private String regiao;
+    private String region;
 
     public void removeCepFormatting(String cep) {
         log.info("Iniciando a remoção da formatação do CEP: {}", cep);

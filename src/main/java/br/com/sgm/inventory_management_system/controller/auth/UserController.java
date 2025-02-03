@@ -2,6 +2,7 @@ package br.com.sgm.inventory_management_system.controller.auth;
 
 import br.com.sgm.inventory_management_system.dto.UserDTO;
 import br.com.sgm.inventory_management_system.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUserById(
             @PathVariable Long id,
-            @RequestBody UserDTO userDTO,
+            @Valid @RequestBody UserDTO userDTO,
             @RequestHeader(name = "Authorization", required = true) String token) {
         log.info("Tentativa de atualizar usuario com id {} no sistema.", id);
 

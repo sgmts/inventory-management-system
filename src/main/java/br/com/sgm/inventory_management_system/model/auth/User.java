@@ -50,24 +50,24 @@ public class User {
 
     @NotBlank(message = "O CPF é obrigatório.")
     @Size(min = 11, max = 11, message = "CPF inválido. Use o formato 00000000000.")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String cpf;
 
     @NotBlank(message = "O telefone é obrigatório.")
     @Pattern(regexp = "^[1-9]{2}9[0-9]{8}$", message = "O telefone deve estar no formato DDD + número (ex: 31912345678)")
-    private String telefone;
+    private String cellPhone;
 
     @NotNull(message = "A data de nascimento é obrigatória.")
     @Past(message = "A data de nascimento deve ser uma data no passado.")
     @Column(nullable = false)
-    private LocalDate dataNascimento;
+    private LocalDate birthDate;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_user_id", referencedColumnName = "id")
-    private EnderecoUser endereco;
+    private UserAddress address;
 
     @Column(nullable = false)
-    private LocalDateTime dataCadastro;
+    private LocalDateTime registrationDate;
 
     @Enumerated(EnumType.STRING)
     private Role role;

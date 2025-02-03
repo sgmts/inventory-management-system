@@ -1,13 +1,12 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.EnderecoUserDto;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
 import br.com.sgm.inventory_management_system.exceptions.EmailAlreadyRegisteredException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingUserException;
 import br.com.sgm.inventory_management_system.exceptions.UserNotFoundException;
-import br.com.sgm.inventory_management_system.mapper.EnderecoUserMapper;
+import br.com.sgm.inventory_management_system.mapper.UserAddressMapper;
 import br.com.sgm.inventory_management_system.mapper.UserMapper;
-import br.com.sgm.inventory_management_system.model.auth.EnderecoUser;
+import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
 import br.com.sgm.inventory_management_system.service.UserService;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,13 +30,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
-    private final EnderecoUserMapper enderecoUserMapper;
+    private final UserAddressMapper enderecoUserMapper;
 
     public void registerUser(UserDTO userDTO) {
         log.info("Iniciando o registro do usuário com e-mail: {}", userDTO.getEmail());
 
         userDTO.removeCpfFormatting(userDTO.getCpf());
-        userDTO.getEndereco().removeCepFormatting(userDTO.getEndereco().getCep());
+        userDTO.getAddress().removeCepFormatting(userDTO.getAddress().getCep());
 
         User user = userMapper.toEntity(userDTO);
 
@@ -53,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Coloca a data do sistema no Cadastro do usuario
-        user.setDataCadastro(LocalDateTime.now());
+        user.setRegistrationDate(LocalDateTime.now());
         log.info("Data de cadastro definida para o e-mail: {}", user.getEmail());
 
         // Salva o usuário no banco de dados
@@ -136,27 +134,27 @@ public class UserServiceImpl implements UserService {
         userUpdated.setEmail(newUser.getEmail());
         userUpdated.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userUpdated.setCpf(newUser.getCpf());
-        userUpdated.setTelefone(newUser.getTelefone());
-        userUpdated.setDataNascimento(newUser.getDataNascimento());
+        userUpdated.setCellPhone(newUser.getCellPhone());
+        userUpdated.setBirthDate(newUser.getBirthDate());
 
         // Atualiza o endereço do usuário
-        if (newUser.getEndereco() != null) {
-            if (userUpdated.getEndereco() == null) {
+        if (newUser.getAddress() != null) {
+            if (userUpdated.getAddress() == null) {
                 log.info("Criando um novo endereço para o usuário com ID {}.", id);
-                userUpdated.setEndereco(enderecoUserMapper.toEntity(newUser.getEndereco())); // Cria novo Endereço
+                userUpdated.setAddress(enderecoUserMapper.toEntity(newUser.getAddress())); // Cria novo Endereço
             } else {
                 log.info("Atualizando o endereço existente do usuário com ID {}.", id);
-                EnderecoUser enderecoUpdated = userUpdated.getEndereco();
-                EnderecoUserDto novoEndereco = newUser.getEndereco();
+                UserAddress enderecoUpdated = userUpdated.getAddress();
+                br.com.sgm.inventory_management_system.dto.UserAddress novoEndereco = newUser.getAddress();
 
                 enderecoUpdated.setCep(novoEndereco.getCep());
-                enderecoUpdated.setLogradouro(novoEndereco.getLogradouro());
-                enderecoUpdated.setNumero(novoEndereco.getNumero());
-                enderecoUpdated.setComplemento(novoEndereco.getComplemento());
-                enderecoUpdated.setBairro(novoEndereco.getBairro());
-                enderecoUpdated.setCidade(novoEndereco.getCidade());
+                enderecoUpdated.setStreet(novoEndereco.getStreet());
+                enderecoUpdated.setNumber(novoEndereco.getNumber());
+                enderecoUpdated.setAddressComplement(novoEndereco.getAddressComplement());
+                enderecoUpdated.setNeighborhood(novoEndereco.getNeighborhood());
+                enderecoUpdated.setCity(novoEndereco.getCity());
                 enderecoUpdated.setUf(novoEndereco.getUf());
-                enderecoUpdated.setRegiao(novoEndereco.getRegiao());
+                enderecoUpdated.setRegion(novoEndereco.getRegion());
             }
         }
         userUpdated.setRole(newUser.getRole());

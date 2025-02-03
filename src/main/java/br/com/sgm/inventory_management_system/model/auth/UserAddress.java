@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "endereco_user")
-public class EnderecoUser {
+@Table(name = "user_address")
+public class UserAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,23 +29,23 @@ public class EnderecoUser {
     private String cep;
 
     @Column()
-    private String logradouro;
+    private String street;
 
     @Column(nullable = false)
-    private String numero;
+    private String number;
 
     @Column()
-    private String complemento;
+    private String addressComplement;
 
     @Column()
-    private String bairro;
+    private String neighborhood;
 
     @Column()
-    private String cidade;
+    private String city;
 
     @Column()
     private String uf;
 
     @Column()
-    private String regiao;
+    private String region;
 }

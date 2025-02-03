@@ -43,20 +43,20 @@ public class UserDTO {
 
     @Pattern(regexp = "^[1-9]{2}9[0-9]{8}$", message = "O telefone deve estar no formato DDD + número (ex: 31912345678)")
     @JsonProperty("telefone")
-    private String telefone;
+    private String cellPhone;
 
     @NotNull(message = "A data de nascimento é obrigatória.")
     @Past(message = "A data de nascimento deve estar no passado.")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     // Define o formato aceito para entrada/saída JSON
     @JsonProperty("data-nascimento")
-    private LocalDate dataNascimento;
+    private LocalDate birthDate;
 
     @Valid
     @JsonProperty("endereco")
-    private EnderecoUserDto endereco;
+    private UserAddress address;
 
-    private String dataCadastro;
+    private String registrationDate;
 
     @JsonProperty("role")
     private Role role = Role.USER; // Padrão: Usuário comum ;

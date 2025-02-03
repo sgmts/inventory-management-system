@@ -7,13 +7,13 @@ import org.mapstruct.Mapping;
 
 import java.util.Optional;
 
-@Mapper(componentModel = "spring", uses = {EnderecoUserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserAddressMapper.class})
 public interface UserMapper {
 
-    @Mapping(source = "endereco", target = "endereco")
+    @Mapping(source = "address", target = "address")
     User toEntity(UserDTO userDTO);
 
-    @Mapping(source = "endereco", target = "endereco")
+    @Mapping(source = "address", target = "address")
     UserDTO toDto(User user);
 
     // Método para mapeamento de Optional<User> para Optional<UserDTO>
