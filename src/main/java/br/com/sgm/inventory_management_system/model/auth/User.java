@@ -1,6 +1,5 @@
 package br.com.sgm.inventory_management_system.model.auth;
 
-import br.com.sgm.inventory_management_system.model.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

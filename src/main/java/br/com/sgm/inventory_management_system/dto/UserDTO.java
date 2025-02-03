@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.dto;
 
-import br.com.sgm.inventory_management_system.model.Role;
+import br.com.sgm.inventory_management_system.model.auth.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
