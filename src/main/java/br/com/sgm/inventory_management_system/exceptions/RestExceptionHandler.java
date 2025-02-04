@@ -11,44 +11,51 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.EMAIL_ALREADY_REGISTERED_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.EMAIL_ALREADY_REGISTERED_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_PRODUCT_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_PRODUCT_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.JWT_KEY_MISSING_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.JWT_KEY_MISSING_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_MESSAGE;
+
 @ControllerAdvice
 public class RestExceptionHandler {
 
-    private static final String INVALID_CREDENTIALS_MESSAGE = "Credenciais inválidas";
-    private static final String EMAIL_ALREADY_REGISTERED_MESSAGE = "E-mail já cadastrado no sistema";
-    private static final String USER_NOT_FOUND_MESSAGE = "Usuário não encontrado";
-    private static final String JWT_KEY_MISSING_MESSAGE = "A chave JWT é inválida ou está ausente";
-    private static final String ERROR_DELETING_USER_MESSAGE = "Erro ao Deletar Usuario do Sistema";
-    private static final String PRODUCT_NOT_FOUND_MESSAGE = "Produto não encontrado";
-
-
     @ExceptionHandler(InvalidCredentialsException.class)
     private ResponseEntity<RestErrorMessage> invalidCredentialsExceptionHandler(InvalidCredentialsException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("4001", INVALID_CREDENTIALS_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(INVALID_CREDENTIALS_CODE, INVALID_CREDENTIALS_MESSAGE);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(threatResponse);
     }
 
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
     private ResponseEntity<RestErrorMessage> emailAlreadyRegisteredExceptionExceptionHandler(EmailAlreadyRegisteredException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("5001", EMAIL_ALREADY_REGISTERED_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(EMAIL_ALREADY_REGISTERED_CODE, EMAIL_ALREADY_REGISTERED_MESSAGE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     private ResponseEntity<RestErrorMessage> userNotFoundExceptionExceptionHandler(UserNotFoundException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("5002", USER_NOT_FOUND_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(USER_NOT_FOUND_CODE, USER_NOT_FOUND_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 
     @ExceptionHandler(JwtKeyMissingException.class)
     private ResponseEntity<RestErrorMessage> jwtKeyMissingExceptionExceptionHandler(JwtKeyMissingException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("6001", JWT_KEY_MISSING_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(JWT_KEY_MISSING_CODE, JWT_KEY_MISSING_MESSAGE);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(threatResponse);
     }
 
     @ExceptionHandler(ErrorDeletingUserException.class)
     private ResponseEntity<RestErrorMessage> errorDeletingUserExceptionHandler(ErrorDeletingUserException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("5003", ERROR_DELETING_USER_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(ERROR_DELETING_USER_CODE, ERROR_DELETING_USER_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 
@@ -75,7 +82,13 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     private ResponseEntity<RestErrorMessage> userNotFoundExceptionExceptionHandler(ProductNotFoundException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("7001", PRODUCT_NOT_FOUND_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(PRODUCT_NOT_FOUND_CODE, PRODUCT_NOT_FOUND_MESSAGE);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
+    }
+
+    @ExceptionHandler(ErrorDeletingProductException.class)
+    private ResponseEntity<RestErrorMessage> errorDeletingUserExceptionHandler(ErrorDeletingProductException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(ERROR_DELETING_PRODUCT_CODE, ERROR_DELETING_PRODUCT_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 }
