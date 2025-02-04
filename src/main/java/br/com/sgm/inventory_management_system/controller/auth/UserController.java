@@ -30,7 +30,6 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public List<UserDTO> getAllUsers(
             @RequestHeader(name = "Authorization", required = true) String token) {
         log.info("Tentativa de Login");
@@ -38,7 +37,6 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Optional<UserDTO>> getUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
@@ -49,7 +47,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HttpStatus> deleteUserById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {

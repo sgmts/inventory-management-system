@@ -9,7 +9,7 @@ public interface ProductMapper {
 
     Product toEntity(ProductRequestDto productRequestDto);
 
-//    ProductRequestDto toDto(Product product);
+    ProductRequestDto toDto(Product product);
 
 
 }

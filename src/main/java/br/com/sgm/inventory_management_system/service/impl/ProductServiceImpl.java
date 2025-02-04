@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,5 +30,21 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toEntity(productRequestDto);
 
         productRepository.save(product);
+    }
+
+    public List<ProductRequestDto> getAllProducts() {
+        log.info("Iniciando a busca de produtos no sistema.");
+
+        List<Product> productsList = productRepository.findAll();
+        log.info("Número total de produtos encontrados: {}", productsList.size());
+
+        // Usando o UsuarioMapper para converter a lista
+        List<ProductRequestDto> productsDTOList = productsList.stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
+
+        log.info("Conversão para DTOs concluída. Total de produtos processados: {}", productsDTOList.size());
+
+        return productsDTOList;
     }
 }
