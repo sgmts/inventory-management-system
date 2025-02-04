@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,5 +48,15 @@ public class ProductController {
 
         var usuarioSolicitado = productService.getProductById(id);
         return new ResponseEntity<>(usuarioSolicitado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductById(
+            @PathVariable Long id,
+            @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de apagar produto com id {} no sistema.", id);
+
+        productService.deleteProductById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

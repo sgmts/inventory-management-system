@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
 import br.com.sgm.inventory_management_system.dto.ProductRequestDto;
+import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
 import br.com.sgm.inventory_management_system.model.product.Product;
@@ -64,5 +65,21 @@ public class ProductServiceImpl implements ProductService {
 
         log.info("Produto com ID {} encontrado no sistema.", id);
         return productMapper.toOptionalDto(requestedProduct);
+    }
+
+    public void deleteProductById(Long id) {
+        log.info("Iniciando a exclusão do produto com ID {} no sistema.", id);
+
+        if (!productRepository.existsById(id)) {
+            log.warn("Tentativa de excluir produto com ID {} que não existe.", id);
+            throw new ProductNotFoundException();
+        }
+        try {
+            productRepository.deleteById(id);
+            log.info("Produto com ID {} excluído com sucesso.", id);
+        } catch (Exception ex) {
+            log.error("Erro ao excluir o produto com ID {}. Detalhes: {}", id, ex.getMessage());
+            throw new ErrorDeletingProductException();
+        }
     }
 }
