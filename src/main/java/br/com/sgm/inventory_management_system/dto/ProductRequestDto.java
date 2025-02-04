@@ -57,7 +57,8 @@ public class ProductRequestDto {
     @JsonProperty("data-validade")
     private LocalDate expirationDate; // Data de Validade
 
-    private LocalDateTime registrationDate ; // Data de Registro no Sistema
+    @JsonProperty("data-registro")
+    private LocalDateTime registrationDate; // Data de Registro no Sistema
 
     @JsonProperty("isActive")
     private Boolean isActive = true;

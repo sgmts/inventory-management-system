@@ -19,6 +19,7 @@ public class RestExceptionHandler {
     private static final String USER_NOT_FOUND_MESSAGE = "Usuário não encontrado";
     private static final String JWT_KEY_MISSING_MESSAGE = "A chave JWT é inválida ou está ausente";
     private static final String ERROR_DELETING_USER_MESSAGE = "Erro ao Deletar Usuario do Sistema";
+    private static final String PRODUCT_NOT_FOUND_MESSAGE = "Produto não encontrado";
 
 
     @ExceptionHandler(InvalidCredentialsException.class)
@@ -47,16 +48,14 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(ErrorDeletingUserException.class)
     private ResponseEntity<RestErrorMessage> errorDeletingUserExceptionHandler(ErrorDeletingUserException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage("7001", ERROR_DELETING_USER_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage("5003", ERROR_DELETING_USER_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
-        );
+        ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
@@ -74,4 +73,9 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ProductNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> userNotFoundExceptionExceptionHandler(ProductNotFoundException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage("7001", PRODUCT_NOT_FOUND_MESSAGE);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
+    }
 }
