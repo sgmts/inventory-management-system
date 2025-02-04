@@ -82,4 +82,31 @@ public class ProductServiceImpl implements ProductService {
             throw new ErrorDeletingProductException();
         }
     }
+
+    @Override
+    public void updateProduct(Long id, ProductRequestDto newProduct) {
+        log.info("Iniciando a atualização do produto com id {} no sistema.", id);
+
+        // Busca o produto existente no banco
+        Product productUpdated = productRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("Produto com ID {} nao encontrado no sistema", id);
+                    return new ProductNotFoundException();
+                });
+
+        // Atualiza os campos do usuário
+        log.info("Atualizando os dados do produto com ID {}.", id);
+        productUpdated.setName(newProduct.getName());
+        productUpdated.setDescription(newProduct.getDescription());
+        productUpdated.setBarCode(newProduct.getBarCode());
+        productUpdated.setStockQuantity(newProduct.getStockQuantity());
+        productUpdated.setPrice(newProduct.getPrice());
+        productUpdated.setCategory(newProduct.getCategory());
+        productUpdated.setSupplier(newProduct.getSupplier());
+        productUpdated.setExpirationDate(newProduct.getExpirationDate());
+
+        // Salva o usuário atualizado
+        productRepository.save(productUpdated);
+        log.info("Produto com ID {} atualizado com sucesso.", id);
+    }
 }

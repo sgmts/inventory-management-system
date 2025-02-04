@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +59,16 @@ public class ProductController {
 
         productService.deleteProductById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductRequestDto> updateProductById(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductRequestDto productDTO,
+            @RequestHeader(name = "Authorization", required = true) String token) {
+        log.info("Tentativa de atualizar produto com id {} no sistema.", id);
+
+            productService.updateProduct(id, productDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }

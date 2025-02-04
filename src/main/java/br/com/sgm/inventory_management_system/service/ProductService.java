@@ -16,4 +16,6 @@ public interface ProductService {
     Optional<ProductRequestDto> getProductById(Long id);
 
     void deleteProductById(Long id);
+
+    void updateProduct(Long id, @Valid ProductRequestDto productDTO);
 }
