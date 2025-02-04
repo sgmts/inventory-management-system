@@ -2,6 +2,8 @@ package br.com.sgm.inventory_management_system.model.product;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,6 +57,7 @@ public class Product {
     private BigDecimal price;
 
     @NotNull(message = "A categoria do produto é obrigatória.")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @NotBlank(message = "O nome do fornecedor é obrigatório.")

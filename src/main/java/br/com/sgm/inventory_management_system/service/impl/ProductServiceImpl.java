@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.ProductRequestDto;
+import br.com.sgm.inventory_management_system.dto.ProductRequestResponseDto;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
@@ -27,22 +27,22 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void registerProduct(ProductRequestDto productRequestDto) {
-        productRequestDto.setRegistrationDate(LocalDateTime.now());
+    public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
+        productRequestResponseDto.setRegistrationDate(LocalDateTime.now());
 
-        Product product = productMapper.toEntity(productRequestDto);
+        Product product = productMapper.toEntity(productRequestResponseDto);
 
         productRepository.save(product);
     }
 
-    public List<ProductRequestDto> getAllProducts() {
+    public List<ProductRequestResponseDto> getAllProducts() {
         log.info("Iniciando a busca de produtos no sistema.");
 
         List<Product> productsList = productRepository.findAll();
         log.info("Número total de produtos encontrados: {}", productsList.size());
 
         // Usando o UsuarioMapper para converter a lista
-        List<ProductRequestDto> productsDTOList = productsList.stream()
+        List<ProductRequestResponseDto> productsDTOList = productsList.stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductRequestDto> getProductById(Long id) {
+    public Optional<ProductRequestResponseDto> getProductById(Long id) {
         log.info("Iniciando a busca do produto {} no sistema.", id);
 
         Optional<Product> requestedProduct = productRepository.findById(id);
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Long id, ProductRequestDto newProduct) {
+    public void updateProduct(Long id, ProductRequestResponseDto newProduct) {
         log.info("Iniciando a atualização do produto com id {} no sistema.", id);
 
         // Busca o produto existente no banco

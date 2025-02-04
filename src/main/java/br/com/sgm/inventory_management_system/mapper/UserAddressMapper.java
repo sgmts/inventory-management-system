@@ -1,5 +1,6 @@
 package br.com.sgm.inventory_management_system.mapper;
 
+import br.com.sgm.inventory_management_system.dto.UserAddressDto;
 import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import org.mapstruct.Mapper;
 
@@ -7,6 +8,6 @@ import org.mapstruct.Mapper;
 public interface UserAddressMapper {
     UserAddress toDTO(UserAddress userAddress);
 
-    UserAddress toEntity(br.com.sgm.inventory_management_system.dto.UserAddress userAddress);
+    UserAddress toEntity(UserAddressDto userAddressDto);
 
 }

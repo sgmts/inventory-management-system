@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ProductRequestDto {
+public class ProductRequestResponseDto {
 
     @NotBlank(message = "O nome do produto é obrigatório.")
     @JsonProperty("nome")

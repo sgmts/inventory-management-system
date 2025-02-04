@@ -54,7 +54,7 @@ public class UserDTO {
 
     @Valid
     @JsonProperty("endereco")
-    private UserAddress address;
+    private UserAddressDto address;
 
     private String registrationDate;
 

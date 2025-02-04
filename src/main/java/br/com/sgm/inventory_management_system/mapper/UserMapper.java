@@ -16,14 +16,7 @@ public interface UserMapper {
     @Mapping(source = "address", target = "address")
     UserDTO toDto(User user);
 
-    // Método para mapeamento de Optional<User> para Optional<UserDTO>
     default Optional<UserDTO> toOptionalDto(Optional<User> optionalUser) {
         return optionalUser.map(this::toDto);
     }
-
-    // Método para mapeamento de Optional<UserDTO> para Optional<User>
-    default Optional<User> toOptionalEntity(Optional<UserDTO> optionalUserDTO) {
-        return optionalUserDTO.map(this::toEntity);
-    }
-
 }

@@ -1,5 +1,6 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
+import br.com.sgm.inventory_management_system.dto.UserAddressDto;
 import br.com.sgm.inventory_management_system.dto.UserDTO;
 import br.com.sgm.inventory_management_system.exceptions.EmailAlreadyRegisteredException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingUserException;
@@ -114,8 +115,8 @@ public class UserServiceImpl implements UserService {
 
         // Busca o usuário existente no banco
         User userUpdated = userRepository.findById(id)
-                .orElseThrow( () -> {
-                  log.warn("Usuário com ID {} nao encontrado no sistema", id);
+                .orElseThrow(() -> {
+                    log.warn("Usuário com ID {} nao encontrado no sistema", id);
                     return new UserNotFoundException();
                 });
 
@@ -145,7 +146,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 log.info("Atualizando o endereço existente do usuário com ID {}.", id);
                 UserAddress enderecoUpdated = userUpdated.getAddress();
-                br.com.sgm.inventory_management_system.dto.UserAddress novoEndereco = newUser.getAddress();
+                UserAddressDto novoEndereco = newUser.getAddress();
 
                 enderecoUpdated.setCep(novoEndereco.getCep());
                 enderecoUpdated.setStreet(novoEndereco.getStreet());

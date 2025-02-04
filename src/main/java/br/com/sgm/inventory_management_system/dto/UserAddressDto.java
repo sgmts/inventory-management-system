@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAddress {
+public class UserAddressDto {
 
     @NotBlank(message = "O CEP é obrigatório.")
     @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "O CEP deve estar no formato 12345-678.")

@@ -16,21 +16,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static br.com.sgm.inventory_management_system.model.auth.Role.ADMIN;
+import static br.com.sgm.inventory_management_system.model.auth.Role.OPERATOR;
+
 @Configuration
 @EnableMethodSecurity // Habilita o uso de @PreAuthorize e @PostAuthorize
 @SecurityScheme(name = SecurityConfig.SECURITY, type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class SecurityConfig {
 
     public static final String SECURITY = "bearerAuth";
+    public static final String URI_REGISTER = "api/auth/register";
+    public static final String URI_LOGIN = "api/auth/register";
+    public static final String URI_USER_ROLE = "/api/users/**";
+    public static final String URI_PRODUCT_ROLE = "/api/users/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "api/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/auth/login").permitAll()
-                        .requestMatchers("/api/users/**").hasRole("ADMIN") // Apenas ADMIN pode acessar
-                        .requestMatchers("/api/product/**").hasAnyRole("OPERATOR","ADMIN") // Apenas ADMIN pode acessar
+                        .requestMatchers(HttpMethod.POST, URI_REGISTER).permitAll()
+                        .requestMatchers(HttpMethod.POST, URI_LOGIN).permitAll()
+                        .requestMatchers(URI_USER_ROLE).hasRole(ADMIN.name()) // Apenas ADMIN pode acessar
+                        .requestMatchers(URI_PRODUCT_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name()) // Apenas ADMIN pode acessar
                         .anyRequest().authenticated() // Qualquer outro endpoint requer autenticação
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
