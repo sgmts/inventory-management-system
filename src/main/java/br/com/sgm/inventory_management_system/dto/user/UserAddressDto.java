@@ -1,4 +1,4 @@
-package br.com.sgm.inventory_management_system.dto;
+package br.com.sgm.inventory_management_system.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

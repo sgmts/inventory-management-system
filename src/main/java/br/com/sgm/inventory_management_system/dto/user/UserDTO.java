@@ -1,4 +1,4 @@
-package br.com.sgm.inventory_management_system.dto;
+package br.com.sgm.inventory_management_system.dto.user;
 
 import br.com.sgm.inventory_management_system.model.auth.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,4 +1,4 @@
-package br.com.sgm.inventory_management_system.dto;
+package br.com.sgm.inventory_management_system.dto.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

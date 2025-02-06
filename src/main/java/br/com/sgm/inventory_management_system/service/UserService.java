@@ -1,7 +1,7 @@
 package br.com.sgm.inventory_management_system.service;
 
 
-import br.com.sgm.inventory_management_system.dto.UserDTO;
+import br.com.sgm.inventory_management_system.dto.user.UserDTO;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;

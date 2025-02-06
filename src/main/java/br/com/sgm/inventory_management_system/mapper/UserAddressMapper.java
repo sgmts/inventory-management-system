@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.mapper;
 
-import br.com.sgm.inventory_management_system.dto.UserAddressDto;
+import br.com.sgm.inventory_management_system.dto.user.UserAddressDto;
 import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import org.mapstruct.Mapper;
 

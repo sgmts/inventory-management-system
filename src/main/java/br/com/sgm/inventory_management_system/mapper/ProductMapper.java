@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.mapper;
 
-import br.com.sgm.inventory_management_system.dto.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
 import br.com.sgm.inventory_management_system.model.product.Product;
 import org.mapstruct.Mapper;
 

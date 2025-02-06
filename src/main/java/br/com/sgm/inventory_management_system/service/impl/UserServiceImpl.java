@@ -1,7 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.UserAddressDto;
-import br.com.sgm.inventory_management_system.dto.UserDTO;
+import br.com.sgm.inventory_management_system.dto.user.UserAddressDto;
+import br.com.sgm.inventory_management_system.dto.user.UserDTO;
 import br.com.sgm.inventory_management_system.exceptions.EmailAlreadyRegisteredException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingUserException;
 import br.com.sgm.inventory_management_system.exceptions.UserNotFoundException;
@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
         userDTO.removeCpfFormatting(userDTO.getCpf());
         userDTO.getAddress().removeCepFormatting(userDTO.getAddress().getCep());
+
+
+
 
         User user = userMapper.toEntity(userDTO);
 

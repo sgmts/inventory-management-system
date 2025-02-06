@@ -1,8 +1,8 @@
 package br.com.sgm.inventory_management_system.controller.auth;
 
-import br.com.sgm.inventory_management_system.dto.JwtResponseDtO;
-import br.com.sgm.inventory_management_system.dto.LoginRequestDto;
-import br.com.sgm.inventory_management_system.dto.UserDTO;
+import br.com.sgm.inventory_management_system.dto.jwt.JwtResponseDtO;
+import br.com.sgm.inventory_management_system.dto.login.LoginRequestDto;
+import br.com.sgm.inventory_management_system.dto.user.UserDTO;
 import br.com.sgm.inventory_management_system.service.AuthService;
 import br.com.sgm.inventory_management_system.service.UserService;
 import jakarta.validation.Valid;

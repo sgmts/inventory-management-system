@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.mapper;
 
-import br.com.sgm.inventory_management_system.dto.UserDTO;
+import br.com.sgm.inventory_management_system.dto.user.UserDTO;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
