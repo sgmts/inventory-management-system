@@ -1,33 +1,41 @@
 # 🛠️ Sistema de Gestão de Estoque Seguro 🔒
 
 ## 📝 Descrição do Projeto
-O Sistema de Gestão de Estoque com Segurança é uma aplicação robusta desenvolvida em Java, projetada para gerenciar produtos, categorias e movimentações de estoque. 
-  
-🚀O foco do sistema é combinar eficiência operacional com boas práticas de segurança, garantindo a integridade e confidencialidade dos dados.
+O Sistema de Gestão de Estoque Seguro é uma aplicação robusta desenvolvida em Java 17 com Spring Boot 3.4.1. Seu objetivo é permitir um gerenciamento seguro e eficiente de produtos e usuários, garantindo a integridade e a confidencialidade dos dados por meio de boas práticas de segurança.
 
+## 🚀 Principais Características:
+- CRUD de produtos, acessível para Operadores e Administradores;
+- CRUD de usuários, acessível apenas para Administradores;
+- Validação dos campos de request;
+- Integração com API VIA CEP para consulta de endereços;
+- Autenticação segura baseada em JWT;
+- Registro de auditoria para rastrear alterações no sistema;
+- Testes unitários abrangentes para garantir a confiabilidade do sistema.
 ---
 ## ✨ Funcionalidades
 
 ### 🔐 Autenticação e Autorização
-- Login seguro com **tokens JWT**.
-- Controle de permissões (admin, operador e visualizador).
+- Login seguro com tokens JWT; 
+- Controle de acesso com diferentes níveis de permissão (Usuario Padrao,Admin e Operador); 
+- Middleware de segurança com filtros JWT.
 
 ### 📦 Gerenciamento de Produtos
-- Cadastro;
-- edição;
-- exclusão; 
-- listagem de produtos.
+- Cadastro de novos produtos (Admin e Operador); 
+- Edição e remoção (apenas Admin); 
+- Listagem de produtos cadastrados.
 
-### 📂 Controle de Categorias
-- Adicionar;
-- editar;
-- listar; 
-- remover categorias de produtos.
+### 👥 Gerenciamento de Usuários
+- Cadastro de novos usuários (Admin); 
+- Edição e remoção de usuários (Admin); 
+- Consulta de usuários cadastrados (Admin).
 
-### 🔄 Movimentações de Estoque
+### 🗺️ Busca de CEP via API Externa
+- Consulta automática de endereços a partir do CEP fornecido.
+
+### 🔄 Movimentações de Estoque [EM CONTSTRUÇÃO]
 Registrar entradas e saídas com rastreamento de quem realizou a ação.
 
-### 🧾 Registro de Auditoria
+### 🧾 Registro de Auditoria [EM CONTSTRUÇÃO]
 Histórico detalhado de alterações feitas no sistema.
 
 ### 📊 Relatórios
@@ -48,35 +56,61 @@ Histórico detalhado de alterações feitas no sistema.
 ---
 ## 🔗 Endpoints da API
 ### 🔑 Autenticação
-- `POST /auth/login` - Login com e-mail e senha. 
-- `POST /auth/register` - Registrar novos usuários.
+- `POST /auth/login` - Autentica um usuário e retorna um token JWT. 
+- `POST /auth/register` - Cadastra um novo usuário (apenas Admin).
 
 ### 📦 Produtos
 - `GET /produtos` - Lista todos os produtos. 
-- `POST /produtos` - Cadastra um novo produto (apenas admins). 
+- `POST /produtos` - Cadastra um novo produto (Admin e Operador). 
 - `PUT /produtos/{id}` - Atualiza um produto existente (apenas admins). 
 - `DELETE /produtos/{id}` - Remove um produto (apenas admins).
 
-### 📂 Categorias
-- `GET /categorias` - Lista todas as categorias. 
-- `POST /categorias` - Adiciona uma nova categoria.
-
-### 🔄 Movimentações
+### 🔄 Movimentações [EM CONTSTRUÇÃO]
 - `POST /movimentacoes` - Registra entrada ou saída de estoque.
 
-### 📊 Relatórios
+### 📊 Relatórios [EM CONTSTRUÇÃO]
 - `GET /relatorios/estoque-baixo` - Lista produtos com estoque crítico. 
 - `GET /relatorios/movimentacoes` - Histórico de movimentações.
 
+### 🗺️ Busca de CEP
+
+- `GET /api/buscar-cep/{cep}` - Retorna informações sobre o endereço baseado no CEP.
 ---
 ## 🛡️ Padrões de Desenvolvimento
-### 🔄 Padrão de Commits
-Este projeto segue o padrão de commits baseado no Conventional Commits para facilitar o entendimento e rastreamento das alterações.
 
-#### Estrutura do Commit
+### 📂 Estrutura do Projeto
+Este projeto segue o padrão de commits baseado no Conventional Commits para facilitar o entendimento e rastreamento das alterações.
 ```
-<tipo>: <descrição>
+📦 inventory-management-system
+ ┣ 📂 src
+ ┃ ┣ 📂 main
+ ┃ ┃ ┣ 📂 java
+ ┃ ┃ ┃ ┣ 📂 br.com.sgm.inventory_management_system
+ ┃ ┃ ┃ ┃ ┣ 📂 controller
+ ┃ ┃ ┃ ┃ ┣ 📂 dto
+ ┃ ┃ ┃ ┃ ┣ 📂 exceptions
+ ┃ ┃ ┃ ┃ ┣ 📂 filter
+ ┃ ┃ ┃ ┃ ┣ 📂 model
+ ┃ ┃ ┃ ┃ ┣ 📂 repository
+ ┃ ┃ ┃ ┃ ┣ 📂 security
+ ┃ ┃ ┃ ┃ ┣ 📂 service
+ ┃ ┃ ┃ ┃ ┗ 📂 util
+ ┃ ┣ 📂 test
+
 ```
+---
+
+## 🧪 Testes
+### 🔍 Testes Automatizados
+- Testes unitários com JUnit e Mockito. 
+- Testes de segurança simulando acessos indevidos. 
+- Testes de integração para endpoints REST.
+
+### 🛠️ Testes Manuais
+- Verificação de fluxo completo usando Postman.
+
+## 🔄 Padrão de Commits
+Este projeto segue o **Conventional Commits** para padronização:
 
 #### Tipos de Commits:
 - `feat`: Adição de uma nova funcionalidade. 
@@ -85,16 +119,14 @@ Este projeto segue o padrão de commits baseado no Conventional Commits para fac
 - `style`: Alterações que não afetam o código (formatação, espaçamento, etc.). 
 - `refactor`: Refatorações que não alteram a funcionalidade. 
 - `test`: Adição ou modificação de testes. 
-- `chore`: Alterações na configuração do projeto ou tarefas auxiliares.
 
-### 🏗️ Padrões de Projeto
+## 🏗️ Padrões de Projeto
 Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecidos para garantir a manutenibilidade e qualidade do código.
 
 - **[Singleton](https://refactoring.guru/pt-br/design-patterns/singleton)**: Para gerenciar instâncias únicas (ex.: configuração de segurança). 
 - **[Factory](https://refactoring.guru/pt-br/design-patterns/factory-method)**: Para criação de objetos de forma controlada. 
 - **[Repository](https://www.geeksforgeeks.org/repository-design-pattern/)**: Para abstrair operações no banco de dados. 
 - **[Service Layer](https://java-design-patterns.com/patterns/service-layer/#programmatic-example-of-service-layer-pattern-in-java)**: Para concentrar regras de negócio e lógica da aplicação.
-
 
 ---
 ## 🗂️ Estrutura do Banco de Dados
@@ -125,28 +157,12 @@ Este projeto utiliza padrões de projeto (design patterns) amplamente reconhecid
 - `detalhes` - Informações adicionais.
 
 ---
-## 🧪 Testes
-### 🔍 Testes Automatizados
-- ✅ Testes unitários com JUnit para validação dos serviços. 
-- ✅ Testes de integração para endpoints REST.
-
-### 🛠️ Testes Manuais
-- 🔄 Verificação de fluxo completo usando Postman. 
-- 🔐 Testes de segurança simulando entradas maliciosas.
-
----
 ## Documentação da API
 A documentação da API é gerada automaticamente pelo Swagger (SpringDoc OpenAPI).
 
 ### Acessando o Swagger
 Após iniciar o projeto, você pode acessar a documentação interativa em:
 `http://localhost:8080/swagger-ui/index.html`
-
-### Segurança na API
-A API utiliza autenticação JWT. Para acessar os endpoints protegidos, você deve:
-1. Obter um token JWT no endpoint de login (`/auth/login`).
-2. Clicar no botão Authorize no Swagger
-3. Inserir o token
 
 ---
 ## 📝 Licença
@@ -156,8 +172,6 @@ Para mais detalhes, leia o arquivo **[LICENSE](LICENSE)** ou visite [GNU.org](ht
 
 ---
 ### Contato
-Contato
-
 Para mais informações, entre em contato:
 - **Desenvolvedor**: Samuel Martins
-- E-mail: sgmartins777@gmail.com
+- **E-mail**: sgmartins777@gmail.com
