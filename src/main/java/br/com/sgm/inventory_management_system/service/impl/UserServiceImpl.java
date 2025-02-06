@@ -11,7 +11,7 @@ import br.com.sgm.inventory_management_system.mapper.UserMapper;
 import br.com.sgm.inventory_management_system.model.auth.User;
 import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
-import br.com.sgm.inventory_management_system.service.CepService;
+import br.com.sgm.inventory_management_system.service.ZipCodeService;
 import br.com.sgm.inventory_management_system.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserAddressMapper enderecoUserMapper;
 
-    private final CepService cepService;
+    private final ZipCodeService zipCodeService;
 
 
     public void registerUser(UserDTO userDTO) {
         log.info("Iniciando o registro do usuário com e-mail: {}", userDTO.getEmail());
 
         // Obter resposta da API ViaCEP
-        ViaCepResponseDto cepResponse = cepService.findAddress(userDTO.getAddress().getCep());
+        ViaCepResponseDto cepResponse = zipCodeService.findAddress(userDTO.getAddress().getCep());
 
         enderecoUserMapper.updateUserAddressFromViaCep(cepResponse, userDTO.getAddress());
 

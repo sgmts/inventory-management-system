@@ -4,7 +4,7 @@ import br.com.sgm.inventory_management_system.dto.user.ViaCepResponseDto;
 
 import java.util.List;
 
-public interface CepService {
+public interface ZipCodeService {
 
     ViaCepResponseDto findAddress(String cep);
 

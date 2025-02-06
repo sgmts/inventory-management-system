@@ -60,6 +60,6 @@ public class ProductRequestResponseDto {
     @JsonProperty("data-registro")
     private LocalDateTime registrationDate; // Data de Registro no Sistema
 
-    @JsonProperty("isActive")
-    private Boolean isActive = true;
+    @JsonProperty("ativo")
+    private Boolean enabled = true;
 }

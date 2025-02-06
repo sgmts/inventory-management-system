@@ -1,7 +1,7 @@
 package br.com.sgm.inventory_management_system.controller.cep;
 
 import br.com.sgm.inventory_management_system.dto.user.ViaCepResponseDto;
-import br.com.sgm.inventory_management_system.service.CepService;
+import br.com.sgm.inventory_management_system.service.ZipCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +16,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @Validated
-public class CepController {
+public class ZipCodeController {
 
     @Autowired
-    private CepService cepService;
+    private ZipCodeService zipCodeService;
 
     @GetMapping("/buscar-cep/{uf}/{city}/{street}")
-    public ResponseEntity<List<ViaCepResponseDto>> buscarCep(
+    public ResponseEntity<List<ViaCepResponseDto>> findZipCode(
             @PathVariable String uf,
             @PathVariable String city,
             @PathVariable String street) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(cepService.findZipCode(uf, city, street));
+        return ResponseEntity.status(HttpStatus.OK).body(zipCodeService.findZipCode(uf, city, street));
 
     }
 }

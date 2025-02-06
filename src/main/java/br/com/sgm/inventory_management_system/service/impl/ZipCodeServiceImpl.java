@@ -4,7 +4,7 @@ import br.com.sgm.inventory_management_system.dto.user.ViaCepResponseDto;
 import br.com.sgm.inventory_management_system.exceptions.CepQueryErrorException;
 import br.com.sgm.inventory_management_system.exceptions.InvalidZipCodeException;
 import br.com.sgm.inventory_management_system.exceptions.ZipCodeNotFoundException;
-import br.com.sgm.inventory_management_system.service.CepService;
+import br.com.sgm.inventory_management_system.service.ZipCodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Service
-public class CepServiceImpl implements CepService {
+public class ZipCodeServiceImpl implements ZipCodeService {
 
     @Value("${api.viacep.endpoint.consulta.endereco}")
     private String viaCepUrlEndereco;
