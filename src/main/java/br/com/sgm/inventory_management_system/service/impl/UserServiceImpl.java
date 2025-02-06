@@ -2,14 +2,16 @@ package br.com.sgm.inventory_management_system.service.impl;
 
 import br.com.sgm.inventory_management_system.dto.user.UserAddressDto;
 import br.com.sgm.inventory_management_system.dto.user.UserDTO;
+import br.com.sgm.inventory_management_system.dto.user.ViaCepResponseDto;
 import br.com.sgm.inventory_management_system.exceptions.EmailAlreadyRegisteredException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingUserException;
 import br.com.sgm.inventory_management_system.exceptions.UserNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.UserAddressMapper;
 import br.com.sgm.inventory_management_system.mapper.UserMapper;
-import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import br.com.sgm.inventory_management_system.model.auth.User;
+import br.com.sgm.inventory_management_system.model.auth.UserAddress;
 import br.com.sgm.inventory_management_system.repository.UserRepository;
+import br.com.sgm.inventory_management_system.service.CepService;
 import br.com.sgm.inventory_management_system.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +35,20 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserAddressMapper enderecoUserMapper;
 
+    private final CepService cepService;
+
+
     public void registerUser(UserDTO userDTO) {
         log.info("Iniciando o registro do usuário com e-mail: {}", userDTO.getEmail());
 
+        // Obter resposta da API ViaCEP
+        ViaCepResponseDto cepResponse = cepService.findZipCode(userDTO.getAddress().getCep());
+
+        enderecoUserMapper.updateUserAddressFromViaCep(cepResponse, userDTO.getAddress());
+
         userDTO.removeCpfFormatting(userDTO.getCpf());
+
         userDTO.getAddress().removeCepFormatting(userDTO.getAddress().getCep());
-
-
-
 
         User user = userMapper.toEntity(userDTO);
 

@@ -17,14 +17,20 @@ import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorC
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_PRODUCT_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERRO_DEFAULT_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERRO_DEFAULT_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_ZIP_CODE_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_ZIP_CODE_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.JWT_KEY_MISSING_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.JWT_KEY_MISSING_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ZIP_CODE_NOT_FOUND_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ZIP_CODE_NOT_FOUND_MESSAGE;
 
 @ControllerAdvice
 public class RestExceptionHandler {
@@ -91,4 +97,23 @@ public class RestExceptionHandler {
         RestErrorMessage threatResponse = new RestErrorMessage(ERROR_DELETING_PRODUCT_CODE, ERROR_DELETING_PRODUCT_MESSAGE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
+
+    @ExceptionHandler(InvalidZipCodeException.class)
+    public ResponseEntity<RestErrorMessage> invalidZipCodeExceptionHandler(InvalidZipCodeException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(INVALID_ZIP_CODE_CODE, INVALID_ZIP_CODE_MESSAGE);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(threatResponse);
+    }
+
+    @ExceptionHandler(ZipCodeNotFoundException.class)
+    public ResponseEntity<RestErrorMessage> zipCodeNotFoundExceptionHandler(ZipCodeNotFoundException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(ZIP_CODE_NOT_FOUND_CODE, ZIP_CODE_NOT_FOUND_MESSAGE);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
+    }
+
+    @ExceptionHandler(CepQueryErrorException.class)
+    public ResponseEntity<RestErrorMessage> cepQueryErrorException(CepQueryErrorException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(ERRO_DEFAULT_CODE, ERRO_DEFAULT_MESSAGE);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(threatResponse);
+    }
+
 }
