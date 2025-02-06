@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         log.info("Iniciando o registro do usuário com e-mail: {}", userDTO.getEmail());
 
         // Obter resposta da API ViaCEP
-        ViaCepResponseDto cepResponse = cepService.findZipCode(userDTO.getAddress().getCep());
+        ViaCepResponseDto cepResponse = cepService.findAddress(userDTO.getAddress().getCep());
 
         enderecoUserMapper.updateUserAddressFromViaCep(cepResponse, userDTO.getAddress());
 

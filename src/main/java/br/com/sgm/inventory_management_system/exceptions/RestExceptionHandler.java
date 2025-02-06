@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorC
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERRO_DEFAULT_CODE;
-import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERRO_DEFAULT_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_ZIP_CODE_CODE;
@@ -27,6 +27,8 @@ import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorC
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.JWT_KEY_MISSING_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.PRODUCT_NOT_FOUND_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.QUERY_ERROR_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.QUERY_ERROR_MESSAGE_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.USER_NOT_FOUND_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ZIP_CODE_NOT_FOUND_CODE;
@@ -112,7 +114,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(CepQueryErrorException.class)
     public ResponseEntity<RestErrorMessage> cepQueryErrorException(CepQueryErrorException e) {
-        RestErrorMessage threatResponse = new RestErrorMessage(ERRO_DEFAULT_CODE, ERRO_DEFAULT_MESSAGE);
+        RestErrorMessage threatResponse = new RestErrorMessage(QUERY_ERROR_MESSAGE_CODE, QUERY_ERROR_MESSAGE);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(threatResponse);
     }
 
