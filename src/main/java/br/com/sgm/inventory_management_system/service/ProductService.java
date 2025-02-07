@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ProductService {
 
-    void registerProduct(@Valid ProductRequestResponseDto productRequestResponseDto);
+    void registerProduct(ProductRequestResponseDto productRequestResponseDto);
 
     List<ProductRequestResponseDto> getAllProducts();
 
@@ -17,5 +17,5 @@ public interface ProductService {
 
     void deleteProductById(Long id);
 
-    void updateProduct(Long id, @Valid ProductRequestResponseDto productDTO);
+    void updateProduct(Long id, ProductRequestResponseDto productDTO);
 }

@@ -26,9 +26,9 @@ public class SecurityConfig {
 
     public static final String SECURITY = "bearerAuth";
     public static final String URI_REGISTER = "api/auth/register";
-    public static final String URI_LOGIN = "api/auth/register";
+    public static final String URI_LOGIN = "api/auth/login";
     public static final String URI_USER_ROLE = "/api/users/**";
-    public static final String URI_PRODUCT_ROLE = "/api/users/**";
+    public static final String URI_PRODUCT_ROLE = "/api/product";
     public static final String URI_FIND_ZIPCODE = "/api/buscar-cep/**";
 
     @Bean

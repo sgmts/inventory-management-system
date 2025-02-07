@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     public static final String AUTHORIZATION = "Authorization";
-    public static final String BEARER = "Bearer ";
+    public static final String BEARER = "Bearer";
     public static final String WHITE_SPACE = " ";
     public static final Integer BEARER_PREFIX_LENGTH = 7;
     public static final String ROLE = "role";
