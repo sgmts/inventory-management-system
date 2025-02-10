@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,10 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
-        productRequestResponseDto.setRegistrationDate(LocalDateTime.now());
-
         Product product = productMapper.toEntity(productRequestResponseDto);
-
         productRepository.save(product);
     }
 
@@ -101,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
         productUpdated.setBarCode(newProduct.getBarCode());
         productUpdated.setStockQuantity(newProduct.getStockQuantity());
         productUpdated.setPrice(newProduct.getPrice());
-        productUpdated.setCategory(newProduct.getCategory());
+        productUpdated.setCategoryEnum(newProduct.getCategoryEnum());
         productUpdated.setSupplier(newProduct.getSupplier());
         productUpdated.setExpirationDate(newProduct.getExpirationDate());
         productUpdated.setEnabled(newProduct.getEnabled());

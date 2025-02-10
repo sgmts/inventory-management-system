@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.dto.user;
 
-import br.com.sgm.inventory_management_system.model.auth.Role;
+import br.com.sgm.inventory_management_system.model.auth.RoleEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -59,7 +59,7 @@ public class UserDTO {
     private String registrationDate;
 
     @JsonProperty("role")
-    private Role role = Role.USER; // Padrão: Usuário comum ;
+    private RoleEnum roleEnum;
 
     public void removeCpfFormatting(String cpf) {
         log.info("Iniciando formatacao dos caracteres do CPF");

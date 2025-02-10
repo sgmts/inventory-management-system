@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Future;
@@ -58,7 +59,7 @@ public class Product {
 
     @NotNull(message = "A categoria do produto é obrigatória.")
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private CategoryEnum categoryEnum;
 
     @NotBlank(message = "O nome do fornecedor é obrigatório.")
     @Size(min = 3, max = 100, message = "O nome do fornecedor deve ter entre 3 e 100 caracteres.")
@@ -76,4 +77,10 @@ public class Product {
     @Column()
     private Boolean enabled;
 
+    @PrePersist
+    private void prePersist() {
+        registrationDate = LocalDateTime.now();
+        enabled = true;
+
+    }
 }

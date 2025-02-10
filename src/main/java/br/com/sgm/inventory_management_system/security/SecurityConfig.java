@@ -16,8 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static br.com.sgm.inventory_management_system.model.auth.Role.ADMIN;
-import static br.com.sgm.inventory_management_system.model.auth.Role.OPERATOR;
+import static br.com.sgm.inventory_management_system.model.auth.RoleEnum.ADMIN;
+import static br.com.sgm.inventory_management_system.model.auth.RoleEnum.OPERATOR;
 
 @Configuration
 @EnableMethodSecurity // Habilita o uso de @PreAuthorize e @PostAuthorize

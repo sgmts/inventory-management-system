@@ -1,6 +1,6 @@
 package br.com.sgm.inventory_management_system.dto.product;
 
-import br.com.sgm.inventory_management_system.model.product.Category;
+import br.com.sgm.inventory_management_system.model.product.CategoryEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
@@ -47,7 +47,7 @@ public class ProductRequestResponseDto {
     private BigDecimal price;
 
     @JsonProperty("categoria")
-    private Category category;
+    private CategoryEnum categoryEnum;
 
     @NotBlank(message = "O nome do fornecedor é obrigatório.")
     @JsonProperty("fornecedor")
@@ -63,5 +63,5 @@ public class ProductRequestResponseDto {
     private LocalDateTime registrationDate; // Data de Registro no Sistema
 
     @JsonProperty("ativo")
-    private Boolean enabled = true;
+    private Boolean enabled;
 }

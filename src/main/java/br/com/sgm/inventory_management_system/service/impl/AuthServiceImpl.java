@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
         log.info("Senha validada com sucesso para o e-mail: {}", loginRequest.getEmail());
 
         // Gera o token JWT incluindo o papel do usuário
-        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRoleEnum().name());
         log.info("Token JWT gerado com sucesso para o e-mail: {}", loginRequest.getEmail());
 
         return token;

@@ -62,10 +62,6 @@ public class UserServiceImpl implements UserService {
         log.info("Criptografando a senha para o e-mail: {}", user.getEmail());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Coloca a data do sistema no Cadastro do usuario
-        user.setRegistrationDate(LocalDateTime.now());
-        log.info("Data de cadastro definida para o e-mail: {}", user.getEmail());
-
         // Salva o usuário no banco de dados
         userRepository.save(user);
         log.info("Usuário com e-mail {} registrado com sucesso!", user.getEmail());
@@ -169,7 +165,7 @@ public class UserServiceImpl implements UserService {
                 enderecoUpdated.setRegion(novoEndereco.getRegion());
             }
         }
-        userUpdated.setRole(newUser.getRole());
+        userUpdated.setRoleEnum(newUser.getRoleEnum());
 
         // Salva o usuário atualizado
         userRepository.save(userUpdated);
