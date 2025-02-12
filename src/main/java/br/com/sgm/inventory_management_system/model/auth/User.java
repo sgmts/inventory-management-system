@@ -64,7 +64,7 @@ public class User {
     private LocalDate birthDate;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_address_id", referencedColumnName = "id")
     private UserAddress address;
 
     @Column(nullable = false)
@@ -76,6 +76,5 @@ public class User {
     @PrePersist
     private void prePersist() {
         registrationDate = LocalDateTime.now();
-        roleEnum = RoleEnum.USER;
     }
 }

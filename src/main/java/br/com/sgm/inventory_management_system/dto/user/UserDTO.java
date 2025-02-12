@@ -59,7 +59,7 @@ public class UserDTO {
     private String registrationDate;
 
     @JsonProperty("role")
-    private RoleEnum roleEnum;
+    private RoleEnum roleEnum = RoleEnum.USER;
 
     public void removeCpfFormatting(String cpf) {
         log.info("Iniciando formatacao dos caracteres do CPF");
