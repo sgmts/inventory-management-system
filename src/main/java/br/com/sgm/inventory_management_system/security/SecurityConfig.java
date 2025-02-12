@@ -30,6 +30,7 @@ public class SecurityConfig {
     public static final String URI_USER_ROLE = "/api/users/**";
     public static final String URI_PRODUCT_ROLE = "/api/product";
     public static final String URI_FIND_ZIPCODE = "/api/buscar-cep/**";
+    public static final String URI_CATEGORY_ROLE = "/api/category/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
@@ -39,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, URI_LOGIN).permitAll()
                         .requestMatchers(HttpMethod.GET, URI_FIND_ZIPCODE).permitAll()
                         .requestMatchers(URI_USER_ROLE).hasRole(ADMIN.name()) // Apenas ADMIN pode acessar
-                        .requestMatchers(URI_PRODUCT_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name()) // Apenas ADMIN pode acessar
+                        .requestMatchers(URI_PRODUCT_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name())
+                        .requestMatchers(URI_CATEGORY_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name())
                         .anyRequest().authenticated() // Qualquer outro endpoint requer autenticação
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

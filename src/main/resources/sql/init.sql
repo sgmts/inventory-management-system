@@ -41,6 +41,12 @@ CREATE TABLE IF NOT EXISTS product (
     enabled BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE IF NOT EXISTS category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(500)
+);
+
 -- Inserindo enderecos na base de dados
 INSERT INTO user_address (cep, street, number, address_complement, neighborhood, city, uf, region)
 VALUES
@@ -78,3 +84,16 @@ VALUES
     ('Cadeira Gamer',                   'Conforto e ergonomia para jogos e trabalho',   '3216549870123',    50,    1299.90,   'CAT_C', 'DXRacer',         '2027-01-10'),
     ('Monitor LG 27"',                  'Monitor IPS 4K Ultra HD',                      '7418529630123',    15,    2399.50,   'CAT_A', 'LG Electronics',  '2026-05-15'),
     ('Teclado Mecânico Logitech',       'Switches Red para melhor resposta',            '8529637410123',    30,    699.99,    'CAT_B', 'Logitech',        '2025-11-25');
+
+INSERT INTO category (name, description)
+VALUES
+    ('ELETRONICOS', 'Eletrônicos de última geração e alta tecnologia.'),
+    ('ROUPAS', 'Moda e vestuário com as últimas tendências.'),
+    ('ALIMENTOS', 'Produtos alimentícios e bebidas especiais.'),
+    ('AUTOMOTIVO', 'Acessórios automotivos e peças para veículos.'),
+    ('LIVROS', 'Livros, papelaria e itens para escritório.'),
+    ('BRINQUEDOS', 'Brinquedos e jogos para todas as idades.'),
+    ('ESPORTES', 'Produtos esportivos e equipamentos para academia.'),
+    ('MOVEIS', 'Móveis e decoração para casa e escritório.'),
+    ('BELEZA', 'Produtos de beleza e cuidados pessoais.'),
+    ('CONSTRUCAO', 'Equipamentos industriais e ferramentas especializadas.');
