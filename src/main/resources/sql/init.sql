@@ -26,27 +26,6 @@ CREATE TABLE IF NOT EXISTS user (
     CONSTRAINT fk_user_address FOREIGN KEY (user_address_id) REFERENCES user_address(id)
 );
 
--- Criando a tabela de produtos se não existir
-CREATE TABLE IF NOT EXISTS product (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description VARCHAR(500),
-    barCode VARCHAR(13) UNIQUE NOT NULL,
-    stockQuantity INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    category_enum ENUM('CAT_A', 'CAT_B', 'CAT_C') NOT NULL,
-    supplier VARCHAR(100) NOT NULL,
-    expirationDate DATE NOT NULL,
-    registrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    enabled BOOLEAN DEFAULT TRUE
-);
-
-CREATE TABLE IF NOT EXISTS category (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description VARCHAR(500)
-);
-
 -- Inserindo enderecos na base de dados
 INSERT INTO user_address (cep, street, number, address_complement, neighborhood, city, uf, region)
 VALUES
@@ -77,23 +56,76 @@ VALUES
     ('Operator3',   'operator3@email.com',  '$2a$10$4ymJFBbRi08lmtq3I6XymetAW2EYHvjMS.O8/76WRl/OvZEQKQOxq', '23833422033',   '31999990009', '1983-06-22', 'OPERATOR',    9),
     ('Operator4',   'operator4@email.com',  '$2a$10$4ymJFBbRi08lmtq3I6XymetAW2EYHvjMS.O8/76WRl/OvZEQKQOxq', '68830973092',   '31999990010', '1981-11-28', 'OPERATOR',    10);
 
-INSERT INTO product (name, description, barCode, stockQuantity, price, category_enum, supplier, expirationDate)
-VALUES
-    ('Notebook Dell XPS',               'Ultrabook de alto desempenho',                 '1234567890123',    10,    7599.99,   'CAT_A', 'Dell Brasil',     '2026-12-31'),
-    ('Smartphone Samsung Galaxy S24',   'Modelo mais recente da linha Galaxy',          '9876543210123',    25,    4999.99,   'CAT_B', 'Samsung Brasil',  '2025-08-20'),
-    ('Cadeira Gamer',                   'Conforto e ergonomia para jogos e trabalho',   '3216549870123',    50,    1299.90,   'CAT_C', 'DXRacer',         '2027-01-10'),
-    ('Monitor LG 27"',                  'Monitor IPS 4K Ultra HD',                      '7418529630123',    15,    2399.50,   'CAT_A', 'LG Electronics',  '2026-05-15'),
-    ('Teclado Mecânico Logitech',       'Switches Red para melhor resposta',            '8529637410123',    30,    699.99,    'CAT_B', 'Logitech',        '2025-11-25');
 
-INSERT INTO category (name, description)
+-- Criando a tabela de categorias
+CREATE TABLE IF NOT EXISTS category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(500)
+);
+
+-- Criando a tabela de produtos
+CREATE TABLE IF NOT EXISTS product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(500),
+    bar_code VARCHAR(13) UNIQUE NOT NULL,
+    stock_quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    supplier VARCHAR(100) NOT NULL,
+    expiration_date DATE NOT NULL,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE
+);
+
+-- Criando a tabela intermediária product_category para relacionamento N:N
+CREATE TABLE IF NOT EXISTS product_category (
+    product_id BIGINT NOT NULL,
+    category_id BIGINT NOT NULL,
+    PRIMARY KEY (product_id, category_id),
+    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
+);
+
+-- Inserindo categorias
+INSERT INTO category (name, description) VALUES
+    ('Eletrônicos', 'Produtos de tecnologia e informática'),
+    ('Móveis', 'Itens para casa e escritório'),
+    ('Acessórios', 'Itens complementares para eletrônicos'),
+    ('Automotivo', 'Produtos para veículos e acessórios automotivos'),
+    ('Beleza', 'Cosméticos e produtos de cuidados pessoais'),
+    ('Alimentos', 'Produtos alimentícios e bebidas'),
+    ('Esportes', 'Equipamentos esportivos e roupas fitness'),
+    ('Brinquedos', 'Jogos e brinquedos para todas as idades'),
+    ('Ferramentas', 'Ferramentas elétricas e manuais'),
+    ('Livros', 'Livros e materiais educativos');
+
+-- Inserindo produtos
+INSERT INTO product (name, description, bar_code, stock_quantity, price, supplier, expiration_date)
 VALUES
-    ('ELETRONICOS', 'Eletrônicos de última geração e alta tecnologia.'),
-    ('ROUPAS', 'Moda e vestuário com as últimas tendências.'),
-    ('ALIMENTOS', 'Produtos alimentícios e bebidas especiais.'),
-    ('AUTOMOTIVO', 'Acessórios automotivos e peças para veículos.'),
-    ('LIVROS', 'Livros, papelaria e itens para escritório.'),
-    ('BRINQUEDOS', 'Brinquedos e jogos para todas as idades.'),
-    ('ESPORTES', 'Produtos esportivos e equipamentos para academia.'),
-    ('MOVEIS', 'Móveis e decoração para casa e escritório.'),
-    ('BELEZA', 'Produtos de beleza e cuidados pessoais.'),
-    ('CONSTRUCAO', 'Equipamentos industriais e ferramentas especializadas.');
+    ('Notebook Dell XPS', 'Ultrabook de alta performance', '1234567890123', 10, 7599.99, 'Dell', '2026-12-31'),
+    ('Cadeira Gamer', 'Conforto e ergonomia para jogos', '9876543210123', 50, 1299.90, 'DXRacer', '2025-08-20'),
+    ('Fone de Ouvido Bluetooth', 'Som de alta qualidade', '3216549870123', 30, 299.90, 'JBL', '2026-05-10'),
+    ('Câmera DSLR Canon', 'Fotografia profissional', '7418529630123', 15, 4599.00, 'Canon', '2026-07-15'),
+    ('Teclado Mecânico RGB', 'Switches para jogos', '8529637410123', 40, 699.99, 'Logitech', '2025-11-25'),
+    ('Mesa de Escritório', 'Móvel para home office', '9517538520123', 20, 899.90, 'Tok&Stok', '2027-01-01'),
+    ('Câmera de Segurança', 'Monitoramento residencial', '7539518520123', 25, 399.90, 'Intelbras', '2026-09-30'),
+    ('Patins Inline', 'Alta velocidade e conforto', '3571598520123', 18, 499.90, 'FILA', '2025-12-31'),
+    ('Kit de Ferramentas', 'Maleta com chaves e alicates', '1593578520123', 35, 279.99, 'Bosch', '2027-03-20'),
+    ('Livro de Java', 'Programação para iniciantes', '8521479630123', 100, 89.90, 'OReilly', '2030-01-01');
+
+-- Relacionando produtos com categorias (M:N)
+INSERT INTO product_category (product_id, category_id) VALUES
+    (1, 1),  -- Notebook Dell XPS → Eletrônicos
+    (2, 2),  -- Cadeira Gamer → Móveis
+    (2, 1),  -- Cadeira Gamer → Eletrônicos
+    (3, 1),  -- Fone de Ouvido → Eletrônicos
+    (3, 3),  -- Fone de Ouvido → Acessórios
+    (4, 1),  -- Câmera DSLR → Eletrônicos
+    (5, 1),  -- Teclado Mecânico → Eletrônicos
+    (6, 2),  -- Mesa de Escritório → Móveis
+    (7, 1),  -- Câmera de Segurança → Eletrônicos
+    (7, 4),  -- Câmera de Segurança → Automotivo
+    (8, 7),  -- Patins → Esportes
+    (9, 9),  -- Kit de Ferramentas → Ferramentas
+    (10, 10); -- Livro de Java → Livros
