@@ -6,19 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.CATEGORY_NOT_FOUND_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.CATEGORY_NOT_FOUND_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.EMAIL_ALREADY_REGISTERED_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.EMAIL_ALREADY_REGISTERED_MESSAGE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_CATEGORY_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_CATEGORY_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_PRODUCT_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_PRODUCT_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_MESSAGE;
-import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERRO_DEFAULT_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_MESSAGE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_ZIP_CODE_CODE;
@@ -116,6 +118,19 @@ public class RestExceptionHandler {
     public ResponseEntity<RestErrorMessage> cepQueryErrorException(CepQueryErrorException e) {
         RestErrorMessage threatResponse = new RestErrorMessage(QUERY_ERROR_MESSAGE_CODE, QUERY_ERROR_MESSAGE);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(threatResponse);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> categoryNotFoundExceptionExceptionHandler(CategoryNotFoundException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(CATEGORY_NOT_FOUND_CODE, CATEGORY_NOT_FOUND_MESSAGE);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
+    }
+
+
+    @ExceptionHandler(ErrorDeletingCategoryException.class)
+    private ResponseEntity<RestErrorMessage> errorDeletingCategoryExceptionHandler(ErrorDeletingCategoryException e) {
+        RestErrorMessage threatResponse = new RestErrorMessage(ERROR_DELETING_CATEGORY_CODE, ERROR_DELETING_CATEGORY_MESSAGE);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(threatResponse);
     }
 
 }
