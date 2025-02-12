@@ -1,12 +1,14 @@
 package br.com.sgm.inventory_management_system.model.product;
 
+import br.com.sgm.inventory_management_system.model.category.Category;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
@@ -22,6 +24,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -58,8 +61,13 @@ public class Product {
     private BigDecimal price;
 
     @NotNull(message = "A categoria do produto é obrigatória.")
-    @Enumerated(EnumType.STRING)
-    private CategoryEnum categoryEnum;
+    @ManyToMany
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
     @NotBlank(message = "O nome do fornecedor é obrigatório.")
     @Size(min = 3, max = 100, message = "O nome do fornecedor deve ter entre 3 e 100 caracteres.")
@@ -68,7 +76,7 @@ public class Product {
 
     @NotNull(message = "A data de validade é obrigatória.")
     @Future(message = "A data de validade deve ser uma data futura.")
-    @Column(nullable = false)
+    @Column(name = "expiration_date", nullable = false)
     private LocalDate expirationDate; // Data de Validade
 
     @Column(nullable = false, updatable = false)
