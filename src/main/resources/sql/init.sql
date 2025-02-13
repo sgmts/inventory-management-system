@@ -60,7 +60,7 @@ VALUES
 -- Criando a tabela de categorias
 CREATE TABLE IF NOT EXISTS category (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) UNIQUE NOT NULL,
     description VARCHAR(500)
 );
 
@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS product_category (
 
 -- Inserindo categorias
 INSERT INTO category (name, description) VALUES
-    ('Eletrônicos', 'Produtos de tecnologia e informática'),
-    ('Móveis', 'Itens para casa e escritório'),
-    ('Acessórios', 'Itens complementares para eletrônicos'),
+    ('Eletronicos', 'Produtos de tecnologia e informática'),
+    ('Moveis', 'Itens para casa e escritório'),
+    ('Acessorios', 'Itens complementares para eletrônicos'),
     ('Automotivo', 'Produtos para veículos e acessórios automotivos'),
     ('Beleza', 'Cosméticos e produtos de cuidados pessoais'),
     ('Alimentos', 'Produtos alimentícios e bebidas'),

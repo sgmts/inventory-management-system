@@ -105,8 +105,10 @@ public class ProductServiceImpl implements ProductService {
         productUpdated.setExpirationDate(newProduct.getExpirationDate());
         productUpdated.setEnabled(newProduct.getEnabled());
 
-        List<Category> categories = categoryRepository.findAllById(newProduct.getCategories());
-        productUpdated.setCategories(categories);
+        if(!(newProduct.getCategories() == null)) {
+            List<Category> categories = categoryRepository.findAllById(newProduct.getCategories());
+            productUpdated.setCategories(categories);
+        }
 
         // Salva o usuário atualizado
         productRepository.save(productUpdated);

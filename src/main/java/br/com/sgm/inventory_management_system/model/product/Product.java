@@ -13,6 +13,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @Size(max = 500, message = "A descrição pode ter no máximo 500 caracteres.")
+    @Max(value = 500, message = "A descrição pode ter no máximo 500 caracteres.")
     @Column()
     private String description;
 

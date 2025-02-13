@@ -24,6 +24,7 @@ public class ProductRequestResponseDto {
     private String id;
 
     @NotBlank(message = "O nome do produto é obrigatório.")
+    @Size(min = 3, max = 100, message = "O nome do produto deve ter entre 3 e 100 caracteres.")
     @JsonProperty("nome")
     private String name;
 
