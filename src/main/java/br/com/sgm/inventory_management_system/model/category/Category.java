@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -31,7 +30,7 @@ public class Category {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Max(value = 500, message = "A categoria pode ter no máximo 500 caracteres.")
+    @Size(max = 500, message = "A descricao da categoria pode ter no máximo 500 caracteres.")
     @Column()
     private String description;
 
