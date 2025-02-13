@@ -4,7 +4,9 @@ import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponse
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
+import br.com.sgm.inventory_management_system.model.category.Category;
 import br.com.sgm.inventory_management_system.model.product.Product;
+import br.com.sgm.inventory_management_system.repository.CategoryRepository;
 import br.com.sgm.inventory_management_system.repository.ProductRepository;
 import br.com.sgm.inventory_management_system.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
+    private final CategoryRepository categoryRepository;
 
     private final ProductMapper productMapper;
 
@@ -97,10 +101,14 @@ public class ProductServiceImpl implements ProductService {
         productUpdated.setBarCode(newProduct.getBarCode());
         productUpdated.setStockQuantity(newProduct.getStockQuantity());
         productUpdated.setPrice(newProduct.getPrice());
-        productUpdated.setCategoryEnum(newProduct.getCategoryEnum());
         productUpdated.setSupplier(newProduct.getSupplier());
         productUpdated.setExpirationDate(newProduct.getExpirationDate());
         productUpdated.setEnabled(newProduct.getEnabled());
+
+        if(!(newProduct.getCategories() == null)) {
+            List<Category> categories = categoryRepository.findAllById(newProduct.getCategories());
+            productUpdated.setCategories(categories);
+        }
 
         // Salva o usuário atualizado
         productRepository.save(productUpdated);
