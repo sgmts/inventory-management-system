@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductResponseDto;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
@@ -30,19 +31,19 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
-        Product product = productMapper.toEntity(productRequestResponseDto);
+    public void registerProduct(ProductRequestDto productRequestDto) {
+        Product product = productMapper.toEntity(productRequestDto);
         productRepository.save(product);
     }
 
-    public List<ProductRequestResponseDto> getAllProducts() {
+    public List<ProductResponseDto> getAllProducts() {
         log.info("Iniciando a busca de produtos no sistema.");
 
         List<Product> productsList = productRepository.findAll();
         log.info("Número total de produtos encontrados: {}", productsList.size());
 
         // Usando o UsuarioMapper para converter a lista
-        List<ProductRequestResponseDto> productsDTOList = productsList.stream()
+        List<ProductResponseDto> productsDTOList = productsList.stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -52,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductRequestResponseDto> getProductById(Long id) {
+    public Optional<ProductResponseDto> getProductById(Long id) {
         log.info("Iniciando a busca do produto {} no sistema.", id);
 
         Optional<Product> requestedProduct = productRepository.findById(id);
@@ -84,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Long id, ProductRequestResponseDto newProduct) {
+    public void updateProduct(Long id, ProductRequestDto newProduct) {
         log.info("Iniciando a atualização do produto com id {} no sistema.", id);
 
         // Busca o produto existente no banco

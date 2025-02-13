@@ -1,21 +1,21 @@
 package br.com.sgm.inventory_management_system.service;
 
 
-import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
-import jakarta.validation.Valid;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductResponseDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
 
-    void registerProduct(ProductRequestResponseDto productRequestResponseDto);
+    void registerProduct(ProductRequestDto productRequestDto);
 
-    List<ProductRequestResponseDto> getAllProducts();
+    List<ProductResponseDto> getAllProducts();
 
-    Optional<ProductRequestResponseDto> getProductById(Long id);
+    Optional<ProductResponseDto> getProductById(Long id);
 
     void deleteProductById(Long id);
 
-    void updateProduct(Long id, ProductRequestResponseDto productDTO);
+    void updateProduct(Long id, ProductRequestDto productDTO);
 }
