@@ -1,5 +1,6 @@
 package br.com.sgm.inventory_management_system.dto.product;
 
+import br.com.sgm.inventory_management_system.dto.category.CategoryRequestResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
@@ -15,7 +16,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -63,7 +63,7 @@ public class ProductRequestResponseDto {
     @JsonProperty("ativo")
     private Boolean enabled;
 
-    @JsonProperty("categorias")
-    private List<Long> categories; // Apenas os IDs das categorias
+    @JsonProperty("categoria")
+    private CategoryRequestResponseDto category;
 
 }

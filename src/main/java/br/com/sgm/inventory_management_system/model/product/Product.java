@@ -7,13 +7,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +23,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -42,7 +39,7 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @Max(value = 500, message = "A descrição pode ter no máximo 500 caracteres.")
+    @Size(max = 500, message = "A descrição pode ter no máximo 500 caracteres.")
     @Column()
     private String description;
 
@@ -62,13 +59,9 @@ public class Product {
     private BigDecimal price;
 
     @NotNull(message = "A categoria do produto é obrigatória.")
-    @ManyToMany
-    @JoinTable(
-            name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @NotBlank(message = "O nome do fornecedor é obrigatório.")
     @Size(min = 3, max = 100, message = "O nome do fornecedor deve ter entre 3 e 100 caracteres.")

@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
 import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.exceptions.CategoryNotFoundException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
@@ -31,7 +32,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
+
         Product product = productMapper.toEntity(productRequestResponseDto);
+
+        if (productRequestResponseDto.getCategory() != null) {
+            Category category = categoryRepository.findByName(productRequestResponseDto.getCategory().getName());
+
+            if (null == category) {
+                throw new CategoryNotFoundException();
+            }
+
+            product.setCategory(category); // GARANTE QUE AS CATEGORIAS SEJAM DEFINIDAS
+        } else {
+            throw new RuntimeException("O PRODUTO DEVE TER AO MENOS UMA CATEGORIA");
+        }
+
+
         productRepository.save(product);
     }
 
@@ -105,9 +121,9 @@ public class ProductServiceImpl implements ProductService {
         productUpdated.setExpirationDate(newProduct.getExpirationDate());
         productUpdated.setEnabled(newProduct.getEnabled());
 
-        if(!(newProduct.getCategories() == null)) {
-            List<Category> categories = categoryRepository.findAllById(newProduct.getCategories());
-            productUpdated.setCategories(categories);
+        if (!(newProduct.getCategory() == null)) {
+            Category category = categoryRepository.findByName(newProduct.getCategory().getName());
+            productUpdated.setCategory(category);
         }
 
         // Salva o usuário atualizado
