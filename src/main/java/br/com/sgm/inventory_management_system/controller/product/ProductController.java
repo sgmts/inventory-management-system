@@ -1,7 +1,6 @@
 package br.com.sgm.inventory_management_system.controller.product;
 
-import br.com.sgm.inventory_management_system.dto.product.ProductRequestDto;
-import br.com.sgm.inventory_management_system.dto.product.ProductResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
 import br.com.sgm.inventory_management_system.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -30,20 +29,20 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody ProductRequestDto productRequestDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody ProductRequestResponseDto productRequestResponseDto) {
 
-        productService.registerProduct(productRequestDto);
+        productService.registerProduct(productRequestResponseDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public List<ProductResponseDto> getAllProducts(
+    public List<ProductRequestResponseDto> getAllProducts(
             @RequestHeader(name = "Authorization", required = true) String token) {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ProductResponseDto>> getProductById(
+    public ResponseEntity<Optional<ProductRequestResponseDto>> getProductById(
             @PathVariable Long id,
             @RequestHeader(name = "Authorization", required = true) String token) {
         log.info("Tentativa de buscar produto com id {} no sistema.", id);
@@ -63,9 +62,9 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductRequestDto> updateProductById(
+    public ResponseEntity<ProductRequestResponseDto> updateProductById(
             @PathVariable Long id,
-            @Valid @RequestBody ProductRequestDto productDTO,
+            @Valid @RequestBody ProductRequestResponseDto productDTO,
             @RequestHeader(name = "Authorization", required = true) String token) {
         log.info("Tentativa de atualizar produto com id {} no sistema.", id);
 

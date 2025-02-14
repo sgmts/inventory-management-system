@@ -1,7 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
-import br.com.sgm.inventory_management_system.dto.product.ProductRequestDto;
-import br.com.sgm.inventory_management_system.dto.product.ProductResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.exceptions.CategoryNotFoundException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
 import br.com.sgm.inventory_management_system.mapper.ProductMapper;
@@ -31,19 +31,34 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void registerProduct(ProductRequestDto productRequestDto) {
-        Product product = productMapper.toEntity(productRequestDto);
+    public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
+
+        Product product = productMapper.toEntity(productRequestResponseDto);
+
+        if (productRequestResponseDto.getCategory() != null) {
+            Category category = categoryRepository.findByName(productRequestResponseDto.getCategory().getName());
+
+            if (null == category) {
+                throw new CategoryNotFoundException();
+            }
+
+            product.setCategory(category); // GARANTE QUE AS CATEGORIAS SEJAM DEFINIDAS
+        } else {
+            throw new RuntimeException("O PRODUTO DEVE TER AO MENOS UMA CATEGORIA");
+        }
+
+
         productRepository.save(product);
     }
 
-    public List<ProductResponseDto> getAllProducts() {
+    public List<ProductRequestResponseDto> getAllProducts() {
         log.info("Iniciando a busca de produtos no sistema.");
 
         List<Product> productsList = productRepository.findAll();
         log.info("Número total de produtos encontrados: {}", productsList.size());
 
         // Usando o UsuarioMapper para converter a lista
-        List<ProductResponseDto> productsDTOList = productsList.stream()
+        List<ProductRequestResponseDto> productsDTOList = productsList.stream()
                 .map(productMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -53,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductResponseDto> getProductById(Long id) {
+    public Optional<ProductRequestResponseDto> getProductById(Long id) {
         log.info("Iniciando a busca do produto {} no sistema.", id);
 
         Optional<Product> requestedProduct = productRepository.findById(id);
@@ -85,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Long id, ProductRequestDto newProduct) {
+    public void updateProduct(Long id, ProductRequestResponseDto newProduct) {
         log.info("Iniciando a atualização do produto com id {} no sistema.", id);
 
         // Busca o produto existente no banco
@@ -106,9 +121,9 @@ public class ProductServiceImpl implements ProductService {
         productUpdated.setExpirationDate(newProduct.getExpirationDate());
         productUpdated.setEnabled(newProduct.getEnabled());
 
-        if(!(newProduct.getCategories() == null)) {
-            List<Category> categories = categoryRepository.findAllById(newProduct.getCategories());
-            productUpdated.setCategories(categories);
+        if (!(newProduct.getCategory() == null)) {
+            Category category = categoryRepository.findByName(newProduct.getCategory().getName());
+            productUpdated.setCategory(category);
         }
 
         // Salva o usuário atualizado
