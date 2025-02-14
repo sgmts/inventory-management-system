@@ -75,16 +75,9 @@ CREATE TABLE IF NOT EXISTS product (
     supplier VARCHAR(100) NOT NULL,
     expiration_date DATE NOT NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    enabled BOOLEAN DEFAULT TRUE
-);
-
--- Criando a tabela intermediária product_category para relacionamento N:N
-CREATE TABLE IF NOT EXISTS product_category (
-    product_id BIGINT NOT NULL,
+    enabled BOOLEAN DEFAULT TRUE,
     category_id BIGINT NOT NULL,
-    PRIMARY KEY (product_id, category_id),
-    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
 );
 
 -- Inserindo categorias
@@ -101,31 +94,15 @@ INSERT INTO category (name, description) VALUES
     ('Livros', 'Livros e materiais educativos');
 
 -- Inserindo produtos
-INSERT INTO product (name, description, bar_code, stock_quantity, price, supplier, expiration_date)
+INSERT INTO product (name, description, bar_code, stock_quantity, price, supplier, expiration_date,category_id)
 VALUES
-    ('Notebook Dell XPS', 'Ultrabook de alta performance', '1234567890123', 10, 7599.99, 'Dell', '2026-12-31'),
-    ('Cadeira Gamer', 'Conforto e ergonomia para jogos', '9876543210123', 50, 1299.90, 'DXRacer', '2025-08-20'),
-    ('Fone de Ouvido Bluetooth', 'Som de alta qualidade', '3216549870123', 30, 299.90, 'JBL', '2026-05-10'),
-    ('Câmera DSLR Canon', 'Fotografia profissional', '7418529630123', 15, 4599.00, 'Canon', '2026-07-15'),
-    ('Teclado Mecânico RGB', 'Switches para jogos', '8529637410123', 40, 699.99, 'Logitech', '2025-11-25'),
-    ('Mesa de Escritório', 'Móvel para home office', '9517538520123', 20, 899.90, 'Tok&Stok', '2027-01-01'),
-    ('Câmera de Segurança', 'Monitoramento residencial', '7539518520123', 25, 399.90, 'Intelbras', '2026-09-30'),
-    ('Patins Inline', 'Alta velocidade e conforto', '3571598520123', 18, 499.90, 'FILA', '2025-12-31'),
-    ('Kit de Ferramentas', 'Maleta com chaves e alicates', '1593578520123', 35, 279.99, 'Bosch', '2027-03-20'),
-    ('Livro de Java', 'Programação para iniciantes', '8521479630123', 100, 89.90, 'OReilly', '2030-01-01');
-
--- Relacionando produtos com categorias (M:N)
-INSERT INTO product_category (product_id, category_id) VALUES
-    (1, 1),  -- Notebook Dell XPS → Eletrônicos
-    (2, 2),  -- Cadeira Gamer → Móveis
-    (2, 1),  -- Cadeira Gamer → Eletrônicos
-    (3, 1),  -- Fone de Ouvido → Eletrônicos
-    (3, 3),  -- Fone de Ouvido → Acessórios
-    (4, 1),  -- Câmera DSLR → Eletrônicos
-    (5, 1),  -- Teclado Mecânico → Eletrônicos
-    (6, 2),  -- Mesa de Escritório → Móveis
-    (7, 1),  -- Câmera de Segurança → Eletrônicos
-    (7, 4),  -- Câmera de Segurança → Automotivo
-    (8, 7),  -- Patins → Esportes
-    (9, 9),  -- Kit de Ferramentas → Ferramentas
-    (10, 10); -- Livro de Java → Livros
+    ('Notebook Dell XPS', 'Ultrabook de alta performance', '1234567890123', 10, 7599.99, 'Dell', '2026-12-31',1),
+    ('Cadeira Gamer', 'Conforto e ergonomia para jogos', '9876543210123', 50, 1299.90, 'DXRacer', '2025-08-20',1),
+    ('Fone de Ouvido Bluetooth', 'Som de alta qualidade', '3216549870123', 30, 299.90, 'JBL', '2026-05-10',1),
+    ('Câmera DSLR Canon', 'Fotografia profissional', '7418529630123', 15, 4599.00, 'Canon', '2026-07-15',1),
+    ('Teclado Mecânico RGB', 'Switches para jogos', '8529637410123', 40, 699.99, 'Logitech', '2025-11-25',1),
+    ('Mesa de Escritório', 'Móvel para home office', '9517538520123', 20, 899.90, 'Tok&Stok', '2027-01-01',1),
+    ('Câmera de Segurança', 'Monitoramento residencial', '7539518520123', 25, 399.90, 'Intelbras', '2026-09-30',1),
+    ('Patins Inline', 'Alta velocidade e conforto', '3571598520123', 18, 499.90, 'FILA', '2025-12-31',1),
+    ('Kit de Ferramentas', 'Maleta com chaves e alicates', '1593578520123', 35, 279.99, 'Bosch', '2027-03-20',1),
+    ('Livro de Java', 'Programação para iniciantes', '8521479630123', 100, 89.90, 'OReilly', '2030-01-01',1);
