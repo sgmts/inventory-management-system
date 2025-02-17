@@ -45,8 +45,9 @@ public class JwtUtil {
 
     // Extrai as claims do token
     public Claims extractClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
