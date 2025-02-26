@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
 import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductUpdateRequestDto;
 import br.com.sgm.inventory_management_system.exceptions.CategoryNotFoundException;
 import br.com.sgm.inventory_management_system.exceptions.ErrorDeletingProductException;
 import br.com.sgm.inventory_management_system.exceptions.ProductNotFoundException;
@@ -9,7 +10,9 @@ import br.com.sgm.inventory_management_system.model.category.Category;
 import br.com.sgm.inventory_management_system.model.product.Product;
 import br.com.sgm.inventory_management_system.repository.CategoryRepository;
 import br.com.sgm.inventory_management_system.repository.ProductRepository;
+import br.com.sgm.inventory_management_system.service.AuditService;
 import br.com.sgm.inventory_management_system.service.ProductService;
+import br.com.sgm.inventory_management_system.util.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static br.com.sgm.inventory_management_system.model.audit.AuditEnum.UPDATE_PRODUCT;
 
 @Slf4j
 @Service
@@ -29,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
+    private final AuditService auditService;
 
     @Override
     public void registerProduct(ProductRequestResponseDto productRequestResponseDto) {
@@ -99,8 +105,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    @Override
-    public void updateProduct(Long id, ProductRequestResponseDto newProduct) {
+    public void updateProduct(Long id, ProductUpdateRequestDto newProduct, String userEmail) {
         log.info("Iniciando a atualização do produto com id {} no sistema.", id);
 
         // Busca o produto existente no banco
@@ -110,16 +115,20 @@ public class ProductServiceImpl implements ProductService {
                     return new ProductNotFoundException();
                 });
 
-        // Atualiza os campos do usuário
+        Product newProductEntity = productMapper.toEntityUpdate(newProduct);
+        // Audita automaticamente qualquer campo que foi alterado
+        auditService.logEntityChanges(UPDATE_PRODUCT, newProductEntity.getClass().getSimpleName(), productUpdated, newProductEntity, userEmail);
+
         log.info("Atualizando os dados do produto com ID {}.", id);
-        productUpdated.setName(newProduct.getName());
-        productUpdated.setDescription(newProduct.getDescription());
-        productUpdated.setBarCode(newProduct.getBarCode());
-        productUpdated.setStockQuantity(newProduct.getStockQuantity());
-        productUpdated.setPrice(newProduct.getPrice());
-        productUpdated.setSupplier(newProduct.getSupplier());
-        productUpdated.setExpirationDate(newProduct.getExpirationDate());
-        productUpdated.setEnabled(newProduct.getEnabled());
+
+        if (newProduct.getName() != null) productUpdated.setName(newProduct.getName());
+        if (newProduct.getDescription() != null) productUpdated.setDescription(newProduct.getDescription());
+        if (newProduct.getBarCode() != null) newProduct.setBarCode(newProduct.getBarCode());
+        if (newProduct.getStockQuantity() != null) productUpdated.setStockQuantity(newProduct.getStockQuantity());
+        if (newProduct.getPrice() != null) productUpdated.setPrice(newProduct.getPrice());
+        if (newProduct.getSupplier() != null) productUpdated.setSupplier(newProduct.getSupplier());
+        if (newProduct.getExpirationDate() != null) productUpdated.setExpirationDate(newProduct.getExpirationDate());
+        if (newProduct.getEnabled() != null) productUpdated.setEnabled(newProduct.getEnabled());
 
         if (!(newProduct.getCategory() == null)) {
             Category category = categoryRepository.findByName(newProduct.getCategory().getName());
