@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.mapper;
 
 import br.com.sgm.inventory_management_system.dto.product.ProductRequestResponseDto;
+import br.com.sgm.inventory_management_system.dto.product.ProductUpdateRequestDto;
 import br.com.sgm.inventory_management_system.model.product.Product;
 import org.mapstruct.Mapper;
 
@@ -11,6 +12,8 @@ public interface ProductMapper {
 
 
     Product toEntity(ProductRequestResponseDto productRequestResponseDto);
+
+    Product toEntityUpdate(ProductUpdateRequestDto productRequestResponseDto);
 
     ProductRequestResponseDto toDto(Product product);
 

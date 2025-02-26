@@ -59,6 +59,9 @@ public class ErrorConstants {
     public static final String ERROR_FOREIGN_KEY_VIOLATION_GENERIC_CODE = "9002";
     public static final String ERROR_FOREIGN_KEY_VIOLATION_GENERIC_MESSAGE = "Já existe um registro com esse valor no sistema.";
 
+    public static final String ERROR_LOG_ENTITY_CHANGES_CODE = "10001";
+    public static final String ERROR_LOG_ENTITY_CHANGES_MESSAGE = "Erro ao registrar mudanças";
+
     private static final Map<String, String> ERROR_MAP;
 
     static {
@@ -78,7 +81,9 @@ public class ErrorConstants {
                 new AbstractMap.SimpleEntry<>(ERROR_FOREIGN_KEY_VIOLATION_GENERIC_CODE, ERROR_FOREIGN_KEY_VIOLATION_GENERIC_MESSAGE),
                 new AbstractMap.SimpleEntry<>(PRODUCT_NOT_FOUND_CODE, PRODUCT_NOT_FOUND_MESSAGE),
                 new AbstractMap.SimpleEntry<>(ERROR_DELETING_PRODUCT_CODE, ERROR_DELETING_PRODUCT_MESSAGE),
-                new AbstractMap.SimpleEntry<>(ERROR_VALUE_NOT_VALID_DESERIALIZE_CODE, ERROR_VALUE_NOT_VALID_DESERIALIZE_MESSAGE)
+                new AbstractMap.SimpleEntry<>(ERROR_VALUE_NOT_VALID_DESERIALIZE_CODE, ERROR_VALUE_NOT_VALID_DESERIALIZE_MESSAGE),
+                new AbstractMap.SimpleEntry<>(ERROR_LOG_ENTITY_CHANGES_CODE, ERROR_LOG_ENTITY_CHANGES_MESSAGE)
+
         );
     }
 
