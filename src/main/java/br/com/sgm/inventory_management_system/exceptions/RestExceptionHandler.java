@@ -20,6 +20,7 @@ import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorC
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_DELETING_USER_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_FOREIGN_KEY_VIOLATION_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_FOREIGN_KEY_VIOLATION_GENERIC_CODE;
+import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_LOG_ENTITY_CHANGES_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_VALUE_NOT_VALID_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.ERROR_VALUE_NOT_VALID_DESERIALIZE_CODE;
 import static br.com.sgm.inventory_management_system.exceptions.constants.ErrorConstants.INVALID_CREDENTIALS_CODE;
@@ -132,5 +133,10 @@ public class RestExceptionHandler {
             return buildErrorResponse(ERROR_FOREIGN_KEY_VIOLATION_CODE, HttpStatus.CONFLICT);
         }
         return buildErrorResponse(ERROR_FOREIGN_KEY_VIOLATION_GENERIC_CODE, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ErrorLogEntityChangesException.class)
+    private ResponseEntity<RestErrorMessage> errorLogEntityChangesExceptionHandler(ErrorLogEntityChangesException e) {
+        return buildErrorResponse(ERROR_LOG_ENTITY_CHANGES_CODE, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

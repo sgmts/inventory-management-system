@@ -1,6 +1,7 @@
 package br.com.sgm.inventory_management_system.service.impl;
 
 import br.com.sgm.inventory_management_system.dto.audit.AuditLogResponse;
+import br.com.sgm.inventory_management_system.exceptions.ErrorLogEntityChangesException;
 import br.com.sgm.inventory_management_system.mapper.AuditLogMapper;
 import br.com.sgm.inventory_management_system.model.audit.AuditEnum;
 import br.com.sgm.inventory_management_system.model.audit.AuditLog;
@@ -61,7 +62,7 @@ public class AuditServiceImpl implements AuditService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ErrorLogEntityChangesException();
         }
     }
 
