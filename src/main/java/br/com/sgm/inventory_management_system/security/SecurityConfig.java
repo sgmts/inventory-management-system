@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, URI_LOGIN).permitAll()
                         .requestMatchers(HttpMethod.GET, URI_FIND_ZIPCODE).permitAll()
                         .requestMatchers(URI_USER_ROLE).hasRole(ADMIN.name()) // Apenas ADMIN pode acessar
+                        .requestMatchers("/api/audit/**").hasRole(ADMIN.name())
                         .requestMatchers(URI_PRODUCT_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name())
                         .requestMatchers(URI_CATEGORY_ROLE).hasAnyRole(OPERATOR.name(), ADMIN.name())
                         .anyRequest().authenticated() // Qualquer outro endpoint requer autenticação

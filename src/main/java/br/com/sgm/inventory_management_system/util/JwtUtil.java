@@ -22,6 +22,8 @@ public class JwtUtil {
 
     private SecretKey secretKey;
 
+    public static final Integer BEARER_PREFIX_LENGTH = 7;
+
     // Inicializa a chave de assinatura
     @PostConstruct
     public void init() {
@@ -50,6 +52,11 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String extractEmailUser(String bearer) {
+        String token = bearer.substring(BEARER_PREFIX_LENGTH); // Remove "Bearer " do início
+        return extractClaims(token).getSubject();
     }
 
     // Verifica se o token é válido

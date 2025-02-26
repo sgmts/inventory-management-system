@@ -106,3 +106,14 @@ VALUES
     ('Patins Inline', 'Alta velocidade e conforto', '3571598520123', 18, 499.90, 'FILA', '2025-12-31',1),
     ('Kit de Ferramentas', 'Maleta com chaves e alicates', '1593578520123', 35, 279.99, 'Bosch', '2027-03-20',1),
     ('Livro de Java', 'Programação para iniciantes', '8521479630123', 100, 89.90, 'OReilly', '2030-01-01',1);
+
+-- Criando a tabela de Audit_logs
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tag VARCHAR(200) ,
+    entityName VARCHAR(200) ,
+    performedBy VARCHAR(200) ,
+    sumary VARCHAR(200) ,
+    detailJson VARCHAR(200),
+    lastModifiedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
